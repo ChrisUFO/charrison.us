@@ -11,3 +11,5 @@ Disallow: /
 
 # Honeypot path (if it were a real file/directory)
 Disallow: /hp-trap/
+
+Sitemap: https://charrison.us/sitemap.xml

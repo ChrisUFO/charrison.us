@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   <meta name="description"
     content="Program Management Professional specializing in leading high-impact, business-wide initiatives and organizational transformation." />
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self';">
 
   <!-- Open Graph / Social Media Meta Tags -->
   <meta property="og:type" content="website" />
@@ -57,9 +59,10 @@
           cross-functional execution.
         </p>
         <div class="hero-actions">
-          <a href="https://www.linkedin.com/in/c-harrison/" target="_blank" class="btn-primary"><i
-              class="fab fa-linkedin"></i> LinkedIn</a>
-          <a href="https://github.com/ChrisUFO" target="_blank" class="btn-github"><i class="fab fa-github"></i>
+          <a href="https://www.linkedin.com/in/c-harrison/" target="_blank" rel="noopener noreferrer"
+            class="btn-primary"><i class="fab fa-linkedin"></i> LinkedIn</a>
+          <a href="https://github.com/ChrisUFO" target="_blank" rel="noopener noreferrer" class="btn-github"><i
+              class="fab fa-github"></i>
             GitHub</a>
         </div>
       </div>
@@ -368,11 +371,14 @@
             <i class="fas fa-envelope"></i>
             <span class="email-display">Click to Reveal Email</span>
           </a>
-          <a href="https://www.linkedin.com/in/c-harrison/" class="contact-item">
+          <!-- Scraper Trap -->
+          <a href="mailto:trap@charrison.us" class="hp-trap" aria-hidden="true" tabindex="-1">Email Support</a>
+          <a href="https://www.linkedin.com/in/c-harrison/" target="_blank" rel="noopener noreferrer"
+            class="contact-item">
             <i class="fab fa-linkedin"></i>
             <span>linkedin.com/in/c-harrison</span>
           </a>
-          <a href="https://github.com/ChrisUFO" class="contact-item">
+          <a href="https://github.com/ChrisUFO" target="_blank" rel="noopener noreferrer" class="contact-item">
             <i class="fab fa-github"></i>
             <span>github.com/ChrisUFO</span>
           </a>

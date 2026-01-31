@@ -1,6 +1,6 @@
 # Christopher Harrison - Personal Website
 
-A professional single-page personal website showcasing my experience, built with Node.js and deployed on Railway.
+A professional single-page personal website showcasing my experience as a System/Platform Program Manager, built with Node.js and deployed on Railway.
 
 ## Overview
 

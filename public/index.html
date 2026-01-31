@@ -364,9 +364,9 @@
       <div class="glass-card contact-card">
         <h2 class="section-title" style="margin-bottom: 2rem;">Get In Touch</h2>
         <div class="contact-links">
-          <a href="mailto:chris@charrison.us" class="contact-item">
+          <a href="#" class="contact-item email-link" data-u="chris" data-d="charrison.us">
             <i class="fas fa-envelope"></i>
-            <span>chris@charrison.us</span>
+            <span class="email-display">Click to Reveal Email</span>
           </a>
           <a href="https://www.linkedin.com/in/c-harrison/" class="contact-item">
             <i class="fab fa-linkedin"></i>
@@ -404,6 +404,22 @@
     }, observerOptions);
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Bot-resistant email reveal
+    document.querySelectorAll('.email-link').forEach(link => {
+      const u = link.getAttribute('data-u');
+      const d = link.getAttribute('data-d');
+      const email = u + '@' + d;
+
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = 'mailto:' + email;
+      });
+
+      link.addEventListener('mouseenter', () => {
+        link.querySelector('.email-display').textContent = email;
+      });
+    });
 
     // Smooth scroll for nav links
     document.querySelectorAll('nav a').forEach(anchor => {

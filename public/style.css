@@ -78,7 +78,7 @@ a {
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: 1rem 0;
+  padding: 0.8rem 0;
 }
 
 .glass-card {
@@ -86,7 +86,7 @@ a {
   backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
-  padding: 2rem;
+  padding: 1.5rem;
   box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -177,12 +177,12 @@ nav a:hover {
 
 /* Hero Section */
 .hero {
-  min-height: 80vh;
+  min-height: 60vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 4rem;
-  padding: 6rem 0;
+  gap: 2rem;
+  padding: 4rem 0;
 }
 
 .hero-content {
@@ -272,7 +272,7 @@ nav a:hover {
 
 /* Sections */
 .section {
-  padding: 6rem 0;
+  padding: 4rem 0;
 }
 
 .section-title {
@@ -423,10 +423,10 @@ nav a:hover {
 /* Footer */
 footer {
   text-align: center;
-  padding: 2rem;
+  padding: 1.5rem;
   color: var(--text-secondary);
   border-top: 1px solid var(--glass-border);
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 /* Responsive */

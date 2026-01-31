@@ -354,6 +354,17 @@ nav a:hover {
   color: var(--text-primary);
 }
 
+.std-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--accent-secondary);
+  text-underline-offset: 3px;
+}
+
+.std-link:hover {
+  color: var(--accent-primary);
+}
+
 .job-header .company {
   color: var(--accent-secondary);
   font-weight: 500;

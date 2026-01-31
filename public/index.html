@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   <meta name="description"
-    content="System/Platform Program Manager specializing in leading high-impact, business-wide initiatives in the Enterprise PMO." />
+    content="Program & Product Management Executive specializing in leading high-impact, business-wide initiatives and organizational transformation." />
 
   <!-- Open Graph / Social Media Meta Tags -->
   <meta property="og:type" content="website" />
@@ -47,14 +47,14 @@
 
   <main class="container">
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero reveal">
       <div class="hero-content">
-        <span class="badge">System/Platform Program Manager</span>
+        <span class="badge">Program & Product Management Executive</span>
         <h1>Christopher <span class="gradient-text">Harrison</span></h1>
         <p class="hero-text">
-          Specializing in high-impact, business-wide initiatives. I execute complex programs that
-          drive transformation and business performance, combining deep R&D experience with
-          strategic enterprise-level execution.
+          Strategic leader with a proven track record of executing complex, high-impact enterprise initiatives.
+          Expertise in leading organizational transformation, NPI, and strategic alignment to drive business
+          performance.
         </p>
         <div class="hero-actions">
           <a href="https://www.linkedin.com/in/c-harrison/" target="_blank" class="btn-primary"><i
@@ -79,7 +79,7 @@
     </section>
 
     <!-- About/Skills Section -->
-    <section id="about" class="section">
+    <section id="about" class="section reveal">
       <h2 class="section-title">Core Competencies</h2>
       <div class="skills-grid">
         <!-- 1. Program & Portfolio Management -->
@@ -122,7 +122,7 @@
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="section">
+    <section id="experience" class="section reveal">
       <h2 class="section-title">Professional Experience</h2>
       <div class="timeline">
         <!-- Woodward Current -->
@@ -280,7 +280,7 @@
     </section>
 
     <!-- Education Section -->
-    <section id="education" class="section">
+    <section id="education" class="section reveal">
       <h2 class="section-title">Education & Credentials</h2>
       <div class="education-split-container">
 
@@ -360,9 +360,9 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="section contact-section">
+    <section id="contact" class="section contact-section reveal">
       <div class="glass-card contact-card">
-        <h2>Get In Touch</h2>
+        <h2 class="section-title" style="margin-bottom: 2rem;">Get In Touch</h2>
         <div class="contact-links">
           <a href="mailto:chris@charrison.us" class="contact-item">
             <i class="fas fa-envelope"></i>
@@ -388,6 +388,35 @@
   <footer>
     <p>&copy; 2026 Christopher Harrison. All rights reserved.</p>
   </footer>
+  <script>
+    // Reveal animation on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('nav a').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        if (this.getAttribute('href').startsWith('#')) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>

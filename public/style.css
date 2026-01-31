@@ -1,14 +1,16 @@
-/* Modern Dark Theme Variables */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800&display=swap');
+
 :root {
-  --bg-dark: #0f172a;
-  --bg-card: rgba(30, 41, 59, 0.7);
+  --bg-dark: #020617;
+  --bg-card: rgba(15, 23, 42, 0.6);
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --accent-primary: #38bdf8;
   --accent-secondary: #818cf8;
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-highlight: rgba(255, 255, 255, 0.05);
-  --font-main: 'Outfit', sans-serif;
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.03);
+  --font-main: 'Inter', sans-serif;
+  --font-heading: 'Outfit', sans-serif;
 }
 
 * {
@@ -55,7 +57,9 @@ h2,
 h3,
 h4 {
   color: var(--text-primary);
-  line-height: 1.2;
+  line-height: 1.1;
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
 }
 
 .gradient-text {
@@ -84,21 +88,20 @@ a {
 
 .glass-card {
   background: var(--bg-card);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  padding: 1.5rem;
+  border-radius: 20px;
+  padding: 2rem;
   box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  transition:
-    transform 0.3s ease,
-    border-color 0.3s ease;
+    0 4px 20px -5px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .glass-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(56, 189, 248, 0.3);
+  transform: translateY(-8px);
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.2);
 }
 
 /* Layout */
@@ -162,8 +165,8 @@ nav a:hover {
 }
 
 .btn-primary:hover {
-  box-shadow: 0 0 25px rgba(56, 189, 248, 0.5);
-  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(56, 189, 248, 0.4);
+  transform: translateY(-3px);
 }
 
 .btn-secondary {
@@ -204,10 +207,11 @@ nav a:hover {
 }
 
 .hero h1 {
-  font-size: 3.5rem;
+  font-size: 4rem;
   margin-bottom: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
 }
 
 .hero-text {
@@ -337,7 +341,8 @@ nav a:hover {
   height: 1rem;
   background: var(--accent-primary);
   border-radius: 50%;
-  box-shadow: 0 0 10px var(--accent-primary);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+  z-index: 10;
 }
 
 .job-header {
@@ -363,6 +368,7 @@ nav a:hover {
 
 .std-link:hover {
   color: var(--accent-primary);
+  text-decoration-color: var(--accent-primary);
 }
 
 .job-header .company {
@@ -497,10 +503,12 @@ nav a:hover {
 /* Footer */
 footer {
   text-align: center;
-  padding: 1.5rem;
+  padding: 3rem 1.5rem;
   color: var(--text-secondary);
   border-top: 1px solid var(--glass-border);
-  margin-top: 1.5rem;
+  margin-top: 4rem;
+  font-size: 0.9rem;
+  opacity: 0.6;
 }
 
 /* Responsive */

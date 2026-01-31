@@ -388,11 +388,31 @@ nav a:hover {
   margin-bottom: 0.5rem;
 }
 
-/* Education Grid - Polished */
+/* Education Layout */
+.education-split-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.subsection-title {
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-left: 3px solid var(--accent-secondary);
+  padding-left: 1rem;
+}
+
+.subsection-title i {
+  color: var(--accent-secondary);
+}
+
 .education-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  /* Slightly wider min-width */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
 }
 
@@ -401,6 +421,19 @@ nav a:hover {
   flex-direction: column;
   justify-content: flex-start;
   height: 100%;
+  position: relative;
+}
+
+/* Specific styling for academic degrees to make them pop */
+.degree-card {
+  border-color: rgba(56, 189, 248, 0.3);
+  background: rgba(30, 41, 59, 0.8);
+  /* Slightly less transparent */
+}
+
+.degree-card h4 {
+  font-size: 1.25rem;
+  /* Larger for degrees */
 }
 
 .edu-card h4 {

@@ -6,6 +6,11 @@ const port = process.env.PORT || 3000;
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
+// ClUFO page
+app.get('/clufo', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'clufo.html'));
+});
+
 // Fallback to index.html for any other requests
 app.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));

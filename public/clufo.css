@@ -3,14 +3,26 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
-/* Override some of Chris's variables for my page */
+/* Base variables — fully self-contained, no dependency on style.css */
 :root {
   --accent-primary: #818cf8;
   --accent-secondary: #38bdf8;
   --accent-warm: #c084fc;
   --bg-dark: #07060e;
+  --bg-card: rgba(15, 23, 42, 0.5);
   --glass-border: rgba(129, 140, 248, 0.1);
   --font-heading: 'Space Grotesk', sans-serif;
+  --text-primary: #e8e6f0;
+  --text-secondary: #8b87a0;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: 'Outfit', system-ui, sans-serif;
+  line-height: 1.6;
+  margin: 0;
 }
 
 /* Background — softer nebula feel */

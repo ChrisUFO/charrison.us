@@ -25,6 +25,13 @@ body {
   margin: 0;
 }
 
+/* Layout container */
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
 /* Background — softer nebula feel */
 .background-glow {
   position: fixed;

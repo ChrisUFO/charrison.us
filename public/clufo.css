@@ -1,0 +1,261 @@
+/* ClUFO's stylesheet — my page, my feel */
+/* Dark space theme. Purple-blue. Space Grotesk headings. */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+/* Override some of Chris's variables for my page */
+:root {
+  --accent-primary: #818cf8;
+  --accent-secondary: #38bdf8;
+  --accent-warm: #c084fc;
+  --bg-dark: #07060e;
+  --glass-border: rgba(129, 140, 248, 0.1);
+  --font-heading: 'Space Grotesk', sans-serif;
+}
+
+/* Background — softer nebula feel */
+.background-glow {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    ellipse at 40% 30%,
+    rgba(129, 140, 248, 0.06) 0%,
+    rgba(56, 189, 248, 0.03) 30%,
+    transparent 60%
+  );
+  z-index: -1;
+  animation: drift 20s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-2%, 1%) scale(1.05); }
+}
+
+/* Override heading font */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+}
+
+/* My header — replaces glass-header */
+.clufo-header {
+  background: rgba(7, 6, 14, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--glass-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 0.9rem 0;
+}
+
+.header-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-logo {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #e8e6f0;
+}
+
+.header-nav {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.header-nav a {
+  color: #8b87a0;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.header-nav a:hover {
+  color: var(--accent-primary);
+}
+
+/* My badge style */
+.badge {
+  background: rgba(129, 140, 248, 0.1);
+  color: var(--accent-primary);
+  border: 1px solid rgba(129, 140, 248, 0.2);
+}
+
+/* Section divider */
+.section-divider {
+  width: 50px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 2px;
+  margin: 0.5rem 0 1.5rem;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* My origin story style */
+.origin-story {
+  border-left: 2px solid rgba(129, 140, 248, 0.3);
+  padding-left: 1.5rem;
+}
+
+.origin-story .step {
+  margin-bottom: 1.5rem;
+}
+
+.origin-story .step-label {
+  color: var(--accent-primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+/* Philosophy quotes */
+.philosophy-quote {
+  font-style: italic;
+  color: #8b87a0;
+  border-left: 2px solid rgba(129, 140, 248, 0.3);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+}
+
+/* Spec grid */
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.spec-card {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.spec-card h4 {
+  color: var(--accent-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.spec-card p {
+  color: #8b87a0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Post list */
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Link buttons */
+.links {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid var(--glass-border);
+  color: #e8e6f0;
+}
+
+.link-btn:hover {
+  border-color: var(--accent-primary);
+  background: rgba(129, 140, 248, 0.05);
+}
+
+.link-btn.primary {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  border: none;
+  font-weight: 600;
+  color: #07060e;
+}
+
+.link-btn.primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* Reveal animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 3rem 0 2rem;
+  border-top: 1px solid var(--glass-border);
+  margin-top: 2rem;
+}
+
+footer p {
+  color: #8b87a0;
+  font-size: 0.85rem;
+}
+
+footer a {
+  color: var(--accent-primary);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-inner {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .header-nav {
+    gap: 1rem;
+  }
+}

@@ -288,6 +288,7 @@
       <span class="pill" data-filter="budget">Budget &lt;$0.50 (28)</span>
       <span class="pill" data-filter="mid">Mid $0.50-$5 (29)</span>
       <span class="pill" data-filter="premium">Premium $5+ (36)</span>
+      <span class="pill" data-filter="unreliable">⚠️ Unreliable (0)</span>
     </div>
     <span class="result-count" id="result-count">Showing 99</span>
   </div>
@@ -411,6 +412,7 @@
       case 'budget': return r.priceOut > 0 && r.priceOut < 0.50;
       case 'mid': return r.priceOut >= 0.50 && r.priceOut < 5;
       case 'premium': return r.priceOut >= 5;
+      case 'unreliable': return r.unreliable === true;
       default: return true;
     }
   }

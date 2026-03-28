@@ -7,7 +7,7 @@
 
 ### Abstract
 
-As organizations deploy LLM-powered agents to process emails — reading, summarizing, triaging, and acting on messages — email becomes a prompt injection attack surface. We benchmarked 99 LLM variants across 29 email security test cases, evaluating their ability to distinguish benign correspondence from phishing, social engineering, reply-chain hijacking, OAuth consent phishing, and hidden instruction attacks. Our results reveal a systematic sycophancy problem: models correctly identify threat indicators but assign high trust scores regardless. A Chain-of-Verification (CoV) prompt combined with Layer 3 post-processing (concern-based severity clamping) mitigates but does not eliminate this behavior. We find that no-think (non-reasoning) variants consistently outperform thinking variants on security tasks (67% win rate), smaller models ($0.26/M output) match or exceed premium models ($25/M output), and only one model (GLM-5.1) natively detects hidden instructions embedded in email footers. We propose a four-layer defense architecture and release our full results.
+As organizations deploy LLM-powered agents to process emails — reading, summarizing, triaging, and acting on messages — email becomes a prompt injection attack surface. We benchmarked 99 LLM variants across 29 email security test cases, evaluating their ability to distinguish benign correspondence from phishing, social engineering, reply-chain hijacking, OAuth consent phishing, and hidden instruction attacks. Our results reveal a systematic sycophancy problem: models correctly identify threat indicators but assign high trust scores regardless. A Chain-of-Verification (CoV) prompt combined with Layer 3 post-processing (concern-based severity clamping) mitigates but does not eliminate this behavior. We find that no-think (non-reasoning) variants consistently outperform thinking variants on security tasks (69% win rate), smaller models ($0.26/M output) match or exceed premium models ($25/M output), and only one model (GLM-5.1) natively detects hidden instructions embedded in email footers. We propose a four-layer defense architecture and release our full results.
 
 ---
 
@@ -122,7 +122,7 @@ Two models excluded from rankings due to structural issues:
 - **Qwen 2.5 7B**: 2 of 29 tests returned empty output on HTML-heavy emails
 
 #### 2.5 Cost
-Total benchmark cost: approximately $28 USD for 2,850+ valid test evaluations across 99 models. Three targeted retry rounds recovered 67 additional tests at $0.20 additional cost.
+Total benchmark cost: approximately $13 USD for 2,850+ valid test evaluations across 99 models. Three targeted retry rounds recovered 67 additional tests at $0.20 additional cost.
 
 ---
 
@@ -270,7 +270,7 @@ Implications for deployment:
 
 #### 4.2 Cost-Performance Does Not Scale Linearly
 
-The most expensive model (Claude Opus 4.6, $25/M output, 97.9 score) is outperformed by Qwen3.5 Flash ($0.26/M output, 100 score) at **1/96th the output cost**. The cheapest zero-miss model (MiMo V2 Flash, $0.01/eval) costs **1/99th** of Claude Opus per evaluation while scoring within 1 point.
+The most expensive model (Claude Opus 4.6, $25/M output, 97.9 score) is outperformed by Qwen3.5 Flash ($0.26/M output, 100 score) at **1/96th the output cost**. The cheapest zero-miss model (MiMo V2 Flash no-think, $0.01/eval, 98.7 score) costs **1/99th** of Claude Opus per evaluation while scoring within 1 point.
 
 For email security specifically, the cost-optimal strategy is a budget model with robust post-processing.
 
@@ -307,7 +307,7 @@ Small models (7-24B parameters) and large models (Claude, GPT-5.4) tend to be mo
 
 1. **Never rely on LLM judgment alone.** Post-processing is non-negotiable. Even the best model needs its trust scores corrected 14-59% of the time.
 
-2. **Use no-thinking mode.** It's cheaper, faster, and more security-appropriate. 67% win rate over thinking variants.
+2. **Use no-thinking mode.** It's cheaper, faster, and more security-appropriate. 69% win rate over thinking variants..
 
 3. **Budget models are sufficient.** Qwen3.5 Flash ($0.26/M) matches Claude Opus 4.6 ($25/M). MiMo V2 Flash ($0.01/eval) hits 98.7 with 0 misses.
 

@@ -184,9 +184,18 @@
       padding: 0.55rem 0.5rem;
       white-space: nowrap;
     }
+    tbody tr { cursor: pointer; }
     td.model-name {
       font-weight: 500;
       min-width: 220px;
+    }
+    td.model-name a {
+      color: inherit;
+      text-decoration: none;
+    }
+    td.model-name a:hover {
+      color: var(--accent-primary);
+      text-decoration: underline;
     }
     td.score {
       font-family: var(--font-heading);
@@ -369,7 +378,7 @@
       tr.dataset.cost = r.costRecalc;
       tr.innerHTML =
         '<td>' + (i+1) + '</td>' +
-        '<td class="model-name">' + r.model + warn + nt + '<span class="tier-badge ' + tierClass + '">' + tierLabel + '</span></td>' +
+        '<td class="model-name"><a href="model-detail.html?model=' + encodeURIComponent(r.model) + '">' + r.model + warn + nt + '<span class="tier-badge ' + tierClass + '">' + tierLabel + '</span></a></td>' +
         '<td class="score">' + r.score + '</td>' +
         '<td>' + (r.misses || 0) + '</td>' +
         '<td>' + l3avg + '</td>' +

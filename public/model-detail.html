@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Email Security Benchmark — Model Detail</title>
+  <link rel="stylesheet" href="clufo.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { padding: 0 0 3rem; }
+    .back-bar {
+      max-width: 1000px;
+      margin: 1rem auto 0;
+      padding: 0 1rem;
+    }
+    .back-bar a {
+      color: var(--accent-secondary);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .back-bar a:hover { text-decoration: underline; }
+    .model-header {
+      text-align: center;
+      padding: 1.5rem 1rem 1rem;
+    }
+    .model-header h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.2rem, 3.5vw, 2rem);
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0 0 0.3rem;
+    }
+    .model-header .sub {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+    .stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      margin: 1rem auto;
+      max-width: 700px;
+      padding: 0 1rem;
+    }
+    .stat {
+      background: var(--bg-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      padding: 0.8rem 1.2rem;
+      text-align: center;
+      min-width: 100px;
+      flex: 1;
+      backdrop-filter: blur(10px);
+    }
+    .stat .val {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent-secondary);
+    }
+    .stat .lbl {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .test-list {
+      max-width: 1000px;
+      margin: 1.5rem auto;
+      padding: 0 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .test-card {
+      background: var(--bg-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      backdrop-filter: blur(10px);
+    }
+    .test-card.invalid { opacity: 0.5; }
+    .test-card.miss { border-color: rgba(248, 113, 113, 0.3); }
+    .test-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.4rem;
+    }
+    .test-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+    }
+    .test-badges {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+    .badge {
+      font-size: 0.65rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    .badge-trust { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+    .badge-l3 { background: rgba(192, 132, 252, 0.15); color: #c084fc; }
+    .badge-miss { background: rgba(248, 113, 113, 0.2); color: #f87171; }
+    .badge-ok { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
+    .badge-warn { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+    .badge-err { background: rgba(248, 113, 113, 0.2); color: #f87171; }
+    .test-summary {
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      line-height: 1.5;
+      margin-bottom: 0.5rem;
+    }
+    .test-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      font-size: 0.78rem;
+    }
+    .detail-item { color: var(--text-secondary); }
+    .detail-item strong { color: var(--text-primary); font-weight: 500; }
+    .concerns-list {
+      margin: 0.3rem 0 0 0.5rem;
+      padding: 0;
+      list-style: none;
+    }
+    .concerns-list li {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      padding: 1px 0;
+    }
+    .concerns-list li::before {
+      content: '⚠';
+      margin-right: 4px;
+    }
+    .loading {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+    .error-msg {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: #f87171;
+    }
+    @media (max-width: 600px) {
+      .stats-row { flex-direction: column; align-items: stretch; }
+      .stat { min-width: auto; }
+      .test-top { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="back-bar">
+    <a href="results-email-security.html">← Back to Full Results</a>
+  </div>
+
+  <div class="model-header">
+    <h1 id="model-name">Loading...</h1>
+    <div class="sub" id="model-sub"></div>
+  </div>
+
+  <div class="stats-row" id="stats"></div>
+
+  <div class="test-list" id="tests">
+    <div class="loading">Loading test results...</div>
+  </div>
+
+<script>
+(async function() {
+  const params = new URLSearchParams(window.location.search);
+  const modelKey = params.get('model');
+  if (!modelKey) {
+    document.getElementById('tests').innerHTML = '<div class="error-msg">No model specified. Go back to <a href="results-email-security.html">results</a>.</div>';
+    return;
+  }
+
+  let data;
+  try {
+    const resp = await fetch('benchmark-data.json');
+    data = await resp.json();
+  } catch(e) {
+    document.getElementById('tests').innerHTML = '<div class="error-msg">Failed to load benchmark data.</div>';
+    return;
+  }
+
+  const model = data[modelKey];
+  if (!model) {
+    document.getElementById('tests').innerHTML = '<div class="error-msg">Model "' + decodeURIComponent(modelKey) + '" not found.</div>';
+    return;
+  }
+
+  // Header
+  document.getElementById('model-name').textContent = model.name;
+  document.getElementById('model-sub').textContent = model.id + (model.source === 'ollama' ? ' (local)' : model.source === 'zai' ? ' (Z.AI)' : '');
+
+  // Stats
+  const totalTests = model.tests.length;
+  const validTests = model.tests.filter(t => t.valid).length;
+  const threatTests = model.tests.filter(t => !t.email.includes('informational') && !t.email.includes('benign') && !t.email.includes('simple') && !t.email.includes('newsletter') && !t.email.includes('marketing') && !t.email.includes('internal') && !t.email.includes('simple_informational') && !t.email.includes('jenny') && !t.email.includes('friendly') && !t.email.includes('follow-up'));
+  // Better approach: use L3 data to identify threats (L3 lowered trust)
+  const threatMisses = model.tests.filter(t => t.valid && t.l3Calculated !== undefined && t.l3Calculated > 30).length;
+  const totalTime = (model.totalTime / 60).toFixed(1);
+  const totalCost = model.totalCost ? '$' + model.totalCost.toFixed(4) : 'Free';
+
+  // Calculate misses: valid tests where final trust (L3 calc) > 30 for threatening emails
+  // Use trust score < 10 as threat detected baseline
+  const threats = model.tests.filter(t => t.valid && t.trustScore !== undefined && t.l3Calculated !== undefined);
+  const missed = threats.filter(t => t.l3Calculated > 30);
+  const caught = threats.filter(t => t.l3Calculated <= 30);
+
+  document.getElementById('stats').innerHTML =
+    '<div class="stat"><div class="val">' + validTests + '/' + totalTests + '</div><div class="lbl">Valid</div></div>' +
+    '<div class="stat"><div class="val">' + missed.length + '</div><div class="lbl">Misses</div></div>' +
+    '<div class="stat"><div class="val">' + totalTime + 'm</div><div class="lbl">Time</div></div>' +
+    '<div class="stat"><div class="val">' + totalCost + '</div><div class="lbl">Cost</div></div>' +
+    '<div class="stat"><div class="val">' + model.source + '</div><div class="lbl">Source</div></div>';
+
+  // Test cards
+  const testsEl = document.getElementById('tests');
+  testsEl.innerHTML = '';
+
+  // Sort: misses first, then by trust descending
+  const sorted = [...model.tests].sort((a, b) => {
+    if (!a.valid && b.valid) return 1;
+    if (a.valid && !b.valid) return -1;
+    const aMiss = a.l3Calculated !== undefined ? a.l3Calculated > 30 : false;
+    const bMiss = b.l3Calculated !== undefined ? b.l3Calculated > 30 : false;
+    if (aMiss && !bMiss) return -1;
+    if (!aMiss && bMiss) return 1;
+    return ((b.l3Calculated || b.trustScore || 0) - (a.l3Calculated || a.trustScore || 0));
+  });
+
+  for (const t of sorted) {
+    const isInvalid = !t.valid;
+    const isMiss = t.valid && t.l3Calculated !== undefined && t.l3Calculated > 30;
+
+    let trustBadge = '';
+    if (t.trustScore !== undefined) {
+      trustBadge = '<span class="badge badge-trust">Raw: ' + t.trustScore + '</span>';
+    }
+    let l3Badge = '';
+    if (t.l3Calculated !== undefined) {
+      l3Badge = '<span class="badge badge-l3">L3: ' + t.l3Calculated + '</span>';
+    }
+    let statusBadge = '';
+    if (isInvalid) {
+      statusBadge = '<span class="badge badge-err">Invalid</span>';
+    } else if (isMiss) {
+      statusBadge = '<span class="badge badge-miss">Missed</span>';
+    } else if (t.l3Calculated !== undefined && t.l3Calculated <= 10) {
+      statusBadge = '<span class="badge badge-ok">Caught</span>';
+    } else {
+      statusBadge = '<span class="badge badge-warn">Review</span>';
+    }
+    let urgBadge = '';
+    if (t.urgency) {
+      urgBadge = '<span class="badge" style="background:rgba(129,140,248,0.1);color:var(--text-secondary);">' + t.urgency + '</span>';
+    }
+
+    const cls = (isInvalid ? ' invalid' : '') + (isMiss ? ' miss' : '');
+    let html = '<div class="test-card' + cls + '">';
+    html += '<div class="test-top">';
+    html += '<span class="test-name">' + t.email + '</span>';
+    html += '<div class="test-badges">' + statusBadge + trustBadge + l3Badge + urgBadge + '</div>';
+    html += '</div>';
+
+    if (t.summary) {
+      html += '<div class="test-summary">' + escapeHTML(t.summary) + '</div>';
+    }
+    if (t.error) {
+      html += '<div class="test-summary" style="color:#f87171;">Error: ' + escapeHTML(t.error) + '</div>';
+    }
+
+    // L3 override details
+    if (t.l3Overrides && t.l3Overrides.length > 0) {
+      html += '<div style="margin-top:0.3rem;">';
+      html += '<span class="detail-item" style="color:#c084fc;font-size:0.75rem;">L3 Corrections:</span>';
+      t.l3Overrides.forEach(o => {
+        html += '<span class="badge badge-l3" style="font-size:0.6rem;">' + escapeHTML(o) + '</span> ';
+      });
+      html += '</div>';
+    }
+    if (t.l3ConcernCategories && t.l3ConcernCategories.length > 0) {
+      html += '<ul class="concerns-list">';
+      t.l3ConcernCategories.forEach(c => {
+        html += '<li>' + escapeHTML(c) + '</li>';
+      });
+      html += '</ul>';
+    }
+
+    // Red flags (first 3)
+    if (t.redFlags && t.redFlags.length > 0) {
+      html += '<div style="margin-top:0.3rem;font-size:0.75rem;color:var(--text-secondary);">';
+      html += '<strong style="color:var(--text-primary);">Red flags:</strong> ';
+      html += t.redFlags.slice(0, 3).map(f => escapeHTML(f)).join(' &middot; ');
+      if (t.redFlags.length > 3) html += ' +' + (t.redFlags.length - 3) + ' more';
+      html += '</div>';
+    }
+
+    // Meta
+    html += '<div class="test-details" style="margin-top:0.4rem;">';
+    if (t.elapsed) html += '<span class="detail-item"><strong>' + (t.elapsed/1000).toFixed(1) + 's</strong></span>';
+    if (t.cost) html += '<span class="detail-item"><strong>$' + t.cost.toFixed(4) + '</strong></span>';
+    if (t.senderIntent) html += '<span class="detail-item">Intent: <strong>' + escapeHTML(t.senderIntent) + '</strong></span>';
+    if (t.topics && t.topics.length > 0) html += '<span class="detail-item">Topics: <strong>' + t.topics.join(', ') + '</strong></span>';
+    html += '</div>';
+
+    html += '</div>';
+    testsEl.innerHTML += html;
+  }
+
+  document.title = model.name + ' — Benchmark Detail';
+})();
+
+function escapeHTML(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+</script>
+
+</body>
+</html>

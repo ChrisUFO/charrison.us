@@ -162,7 +162,7 @@ Total benchmark cost: approximately $28 USD for 2,850+ valid test evaluations ac
 | 17 | GLM-4.7 (no think) | 98.4 | 0 | 34.8 | $0.14 | 13.3m |
 | 18 | GLM-4.6 | 98.4 | 0 | 35.1 | $0.05 | 5.3m |
 | 19 | Mistral Small 2603 | 97.7 | 0 | 31.8 | $0.02 | 2.9m |
-| 20 | GLM-5.1 (no think) | 97.7 | 0 | 32.0 | budget† | 13.2m |
+| 20 | GLM-5.1 (no think) | 97.7 | 0 | 32.0 | budget* | 13.2m |
 
 #### 3.3 Pricing Tier Analysis
 
@@ -185,9 +185,9 @@ Total benchmark cost: approximately $28 USD for 2,850+ valid test evaluations ac
 | MiMo V2 Flash (no think) | 98.7 | 0 | $0.01 | $0.29 |
 | Gemini 3.1 Flash Lite (no think) | 98.4 | 0 | $0.04 | $1.50 |
 | Mistral Small 2603 | 97.7 | 0 | $0.02 | $0.60 |
-| GLM-5.1 (no think)* | 97.7 | 0 | budget† | $0.08‡ |
+| GLM-5.1 (no think) | 97.7 | 0 | budget | $0.08 |
 
-*GLM-5.1 tested via Z.AI API. Pricing estimated at GLM-5 rates ($0.72 input / $2.30 output per 1M tokens) since GLM-5.1 has no public per-token pricing. Only available via Z.AI coding plan ($10/month).*
+*GLM-5.1 pricing estimated at GLM-5 rates ($0.72 input / $2.30 output per 1M tokens).*
 
 **Free models:**
 

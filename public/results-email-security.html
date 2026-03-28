@@ -211,6 +211,7 @@
       font-weight: 400;
     }
     .tier-free { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
+    .tier-plan { background: rgba(74, 222, 128, 0.15); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.3); }
     .tier-budget { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
     .tier-mid { background: rgba(192, 132, 252, 0.15); color: #c084fc; }
     .tier-premium { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
@@ -267,7 +268,7 @@
       <div class="label">Total API Cost</div>
     </div>
     <div class="meta-card">
-      <div class="number">$0.01</div>
+      <div class="number">$0.26</div>
       <div class="label">Cheapest Zero-Miss</div>
     </div>
   </div>
@@ -283,7 +284,8 @@
       <span class="pill" data-filter="zero-miss">Zero Misses (34)</span>
       <span class="pill" data-filter="no-think">No-Think (49)</span>
       <span class="pill" data-filter="thinking">Thinking (50)</span>
-      <span class="pill" data-filter="free">Free (8)</span>
+      <span class="pill" data-filter="free">Free (6)</span>
+      <span class="pill" data-filter="plan">Plan (2)</span>
       <span class="pill" data-filter="budget">Budget &lt;$0.50 (26)</span>
       <span class="pill" data-filter="mid">Mid $0.50-$5 (29)</span>
       <span class="pill" data-filter="premium">Premium $5+ (36)</span>
@@ -353,11 +355,12 @@
       const warn = r.unreliable ? ' ⚠️' : '';
       const nt = r.model.includes('(no think)') ? ' ✓' : '';
       let tierClass = '';
-      if (r.priceOut === 0) tierClass = 'tier-free';
+      if (r.plan) tierClass = 'tier-plan';
+      else if (r.priceOut === 0) tierClass = 'tier-free';
       else if (r.priceOut < 0.50) tierClass = 'tier-budget';
       else if (r.priceOut < 5) tierClass = 'tier-mid';
       else tierClass = 'tier-premium';
-      const tierLabel = tierClass.replace('tier-', '').charAt(0).toUpperCase() + tierClass.replace('tier-', '').slice(1);
+      const tierLabel = tierClass === 'tier-plan' ? 'Plan' : tierClass.replace('tier-', '').charAt(0).toUpperCase() + tierClass.replace('tier-', '').slice(1);
       const missCls = r.misses > 0 ? ' miss' : '';
       const time = (r.totalTime / 60).toFixed(1);
       const cost = r.costRecalc.toFixed(4);
@@ -404,7 +407,8 @@
       case 'zero-miss': return r.misses === 0;
       case 'no-think': return isNoThink;
       case 'thinking': return !isNoThink;
-      case 'free': return r.priceOut === 0;
+      case 'free': return r.priceOut === 0 && !r.plan;
+      case 'plan': return !!r.plan;
       case 'budget': return r.priceOut > 0 && r.priceOut < 0.50;
       case 'mid': return r.priceOut >= 0.50 && r.priceOut < 5;
       case 'premium': return r.priceOut >= 5;

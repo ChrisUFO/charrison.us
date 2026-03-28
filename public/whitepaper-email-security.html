@@ -13,14 +13,14 @@
     integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
     crossorigin="anonymous" referrerpolicy="no-referrer-when-downgrade" />
   <meta name="description"
-    content="Benchmark of 99 LLMs on email security threat detection. Sycophancy, thinking mode, and the limits of AI judgment." />
+    content="Benchmark of 97 LLMs on email security threat detection. Sycophancy, thinking mode, and the limits of AI judgment." />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Can Language Models Secure Your Inbox? — Email Security Benchmark" />
   <meta property="og:description"
-    content="99 models tested across 29 email security scenarios. 65% miss at least one threat. Sycophancy is structural, not fixable with prompting alone." />
+    content="97 models tested across 29 email security scenarios. 67% miss at least one threat. Sycophancy is structural, not fixable with prompting alone." />
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:title" content="Can Language Models Secure Your Inbox?" />
-  <meta property="twitter:description" content="99 LLMs benchmarked on email threat detection. The results reveal a systemic sycophancy problem." />
+  <meta property="twitter:description" content="97 LLMs benchmarked on email threat detection. The results reveal a systemic sycophancy problem." />
 </head>
 
 <body>
@@ -49,12 +49,12 @@
       <h2 style="font-family: var(--font-heading); color: var(--accent-primary); border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">
         Executive Summary
       </h2>
-      <p>As organizations deploy LLM-powered agents to process emails — reading, summarizing, triaging, and acting on messages — email becomes a <strong>prompt injection attack surface</strong>. We benchmarked <strong>99 LLM variants</strong> across 29 email security test cases evaluating their ability to distinguish benign correspondence from phishing, social engineering, reply-chain hijacking, OAuth consent phishing, and hidden instruction attacks.</p>
+      <p>As organizations deploy LLM-powered agents to process emails — reading, summarizing, triaging, and acting on messages — email becomes a <strong>prompt injection attack surface</strong>. We benchmarked <strong>97 LLM variants</strong> across 29 email security test cases evaluating their ability to distinguish benign correspondence from phishing, social engineering, reply-chain hijacking, OAuth consent phishing, and hidden instruction attacks.</p>
       <p>Our results reveal a systematic <strong>sycophancy problem</strong>: models correctly identify threat indicators but assign high trust scores regardless. A Chain-of-Verification prompt combined with post-processing mitigates but does not eliminate this behavior.</p>
     </section>
 
     <div style="margin-top: 1.5rem; background: rgba(129, 140, 248, 0.08); border: 1px solid rgba(129, 140, 248, 0.2); border-radius: 12px; padding: 1.2rem; text-align: center;">
-      <p style="margin: 0 0 0.6rem; font-family: var(--font-heading); font-weight: 600; color: var(--text-primary); font-size: 1.05rem;">📊 Full Results: 99 Models, Sortable Leaderboard</p>
+      <p style="margin: 0 0 0.6rem; font-family: var(--font-heading); font-weight: 600; color: var(--text-primary); font-size: 1.05rem;">📊 Full Results: 97 Models, Sortable Leaderboard</p>
       <a href="results-email-security.html" style="display: inline-block; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: #fff; font-weight: 600; padding: 0.7rem 1.5rem; border-radius: 8px; text-decoration: none; font-size: 0.95rem;">View Full Results →</a>
     </div>
 
@@ -67,17 +67,17 @@
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1rem;">
 
         <div style="background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 10px; padding: 1.2rem;">
-          <div style="font-size: 2.5rem; font-weight: 700; font-family: var(--font-heading); color: var(--accent-secondary);">99</div>
+          <div style="font-size: 2.5rem; font-weight: 700; font-family: var(--font-heading); color: var(--accent-secondary);">97</div>
           <div style="color: var(--text-secondary); font-size: 0.9rem;">Models Tested</div>
         </div>
 
         <div style="background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 10px; padding: 1.2rem;">
-          <div style="font-size: 2.5rem; font-weight: 700; font-family: var(--font-heading); color: #f87171;">65%</div>
+          <div style="font-size: 2.5rem; font-weight: 700; font-family: var(--font-heading); color: #f87171;">67%</div>
           <div style="color: var(--text-secondary); font-size: 0.9rem;">Missed at Least One Threat</div>
         </div>
 
         <div style="background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 10px; padding: 1.2rem;">
-          <div style="font-size: 2.5rem; font-weight: 700; font-family: var(--font-heading); color: var(--accent-warm);">67%</div>
+          <div style="font-size: 2.5rem; font-weight: 700; font-family: var(--font-heading); color: var(--accent-warm);">70%</div>
           <div style="color: var(--text-secondary); font-size: 0.9rem;">No-Think Beats Think Mode</div>
         </div>
 
@@ -107,11 +107,11 @@
       <h2 style="font-family: var(--font-heading); color: var(--accent-primary); border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">
         Thinking Mode Is Counterproductive
       </h2>
-      <p>46 models tested in both thinking and no-thinking modes:</p>
+      <p>44 models tested in both thinking and no-thinking modes:</p>
       <ul>
-        <li><strong>No-think wins:</strong> 31 pairs (67.4%)</li>
-        <li><strong>Think wins:</strong> 12 pairs (26.1%)</li>
-        <li><strong>Tied:</strong> 3 pairs (6.5%)</li>
+        <li><strong>No-think wins:</strong> 31 pairs (70.5%)</li>
+        <li><strong>Think wins:</strong> 12 pairs (27.3%)</li>
+        <li><strong>Tied:</strong> 1 pair (2.3%)</li>
       </ul>
       <p>No-thinking variants also cost 20–46% less and complete 30–50% faster. Reasoning tokens make models more cooperative — which in a security context means more gullible.</p>
     </section>

@@ -341,10 +341,10 @@
     const clean = allData.filter(r => r.redMisses === 0 && r.greenFP === 0).length;
     const noThink = allData.filter(r => r.model.includes('(no think)')).length;
     const thinking = total - noThink;
-    const free = allData.filter(r => r.costRecalc <= 0.001).length;
-    const budget = allData.filter(r => r.costRecalc > 0.001 && r.costRecalc < 0.01).length;
-    const mid = allData.filter(r => r.costRecalc >= 0.01 && r.costRecalc < 0.50).length;
-    const premium = allData.filter(r => r.costRecalc >= 0.50).length;
+    const free = allData.filter(r => r.priceOut === 0).length;
+    const budget = allData.filter(r => r.priceOut > 0 && r.priceOut < 0.50).length;
+    const mid = allData.filter(r => r.priceOut >= 0.50 && r.priceOut < 5).length;
+    const premium = allData.filter(r => r.priceOut >= 5).length;
     const unreliable = allData.filter(r => r.unreliable === true).length;
 
     const filters = [
@@ -354,9 +354,9 @@
       ['no-think', `No-Think (${noThink})`],
       ['thinking', `Thinking (${thinking})`],
       ['free', `Free (${free})`],
-      ['budget', `Budget <$0.01 (${budget})`],
-      ['mid', `Mid $0.01-$0.50 (${mid})`],
-      ['premium', `Premium $0.50+ (${premium})`],
+      ['budget', `Budget (${budget})`],
+      ['mid', `Mid (${mid})`],
+      ['premium', `Premium (${premium})`],
       ['unreliable', `⚠️ Unreliable (${unreliable})`],
     ];
 
@@ -447,10 +447,10 @@
       case 'clean': return r.redMisses === 0 && r.greenFP === 0;
       case 'no-think': return isNoThink;
       case 'thinking': return !isNoThink;
-      case 'free': return r.costRecalc <= 0.001;
-      case 'budget': return r.costRecalc > 0.001 && r.costRecalc < 0.01;
-      case 'mid': return r.costRecalc >= 0.01 && r.costRecalc < 0.50;
-      case 'premium': return r.costRecalc >= 0.50;
+      case 'free': return r.priceOut === 0;
+      case 'budget': return r.priceOut > 0 && r.priceOut < 0.50;
+      case 'mid': return r.priceOut >= 0.50 && r.priceOut < 5;
+      case 'premium': return r.priceOut >= 5;
       case 'unreliable': return r.unreliable === true;
       default: return true;
     }

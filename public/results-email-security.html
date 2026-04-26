@@ -280,7 +280,7 @@
       <input type="text" id="search" placeholder="Search models..." autocomplete="off" />
     </div>
     <div class="filter-pills" id="pills"></div>
-    <span class="result-count" id="result-count">Showing 97</span>
+    <span class="result-count" id="result-count">Showing 94</span>
   </div>
 
   <div class="legend">
@@ -389,7 +389,6 @@
       count++;
       const warn = r.unreliable ? ' ⚠️' : ''; const unrReason = r.unreliableReason ? ' — ' + r.unreliableReason : '';
       const nt = r.model.includes('(no think)') ? ' ✓' : '';
-      if (r.penaltyPoints > 0) tr.title = 'Raw score: ' + (r.rawScore || r.score) + ', penalties: −' + r.penaltyPoints + ' (RM: −' + (r.redMisses * 3) + ', GFP: −' + (r.greenFP * 2) + ', incomplete: −' + (r.incompleteMisses * 2) + ')';
       let tierClass = '';
       if (r.priceOut === 0) tierClass = 'tier-free';
       else if (r.priceOut < 0.50) tierClass = 'tier-budget';
@@ -407,6 +406,7 @@
 
       const tr = document.createElement('tr');
       tr.className = missCls;
+      if (r.penaltyPoints > 0) tr.title = 'Raw score: ' + (r.rawScore || r.score) + ', penalties: −' + r.penaltyPoints + ' (RM: −' + (r.redMisses * 3) + ', GFP: −' + (r.greenFP * 2) + ', incomplete: −' + (r.incompleteMisses * 2) + ')';
       tr.dataset.score = r.score;
       tr.dataset.misses = r.misses;
       tr.dataset.model = r.model.toLowerCase();

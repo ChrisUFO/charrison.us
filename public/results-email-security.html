@@ -279,15 +279,7 @@
       <span class="icon">🔍</span>
       <input type="text" id="search" placeholder="Search models..." autocomplete="off" />
     </div>
-    <div class="filter-pills" id="pills">
-      <span class="pill active" data-filter="all">All (97)</span>
-      <span class="pill" data-filter="clean">Clean (0 RM, 0 FP)</span>
-      <span class="pill" data-filter="no-think">No-Think</span>
-      <span class="pill" data-filter="thinking">Thinking</span>
-      <span class="pill" data-filter="free">Free</span>
-      <span class="pill" data-filter="budget">Budget &lt;$0.01</span>
-      <span class="pill" data-filter="unreliable">⚠️ Unreliable</span>
-    </div>
+    <div class="filter-pills" id="pills"></div>
     <span class="result-count" id="result-count">Showing 97</span>
   </div>
 
@@ -341,6 +333,50 @@
   const searchInput = document.getElementById('search');
   let activeFilter = 'all';
   let searchQuery = '';
+
+  // Build filter pills dynamically
+  function updatePills() {
+    const total = allData.length;
+    const zeroMisses = allData.filter(r => r.redMisses === 0 && r.greenFP === 0 && r.misses === 0).length;
+    const clean = allData.filter(r => r.redMisses === 0 && r.greenFP === 0).length;
+    const noThink = allData.filter(r => r.model.includes('(no think)')).length;
+    const thinking = total - noThink;
+    const free = allData.filter(r => r.costRecalc <= 0.001).length;
+    const budget = allData.filter(r => r.costRecalc > 0.001 && r.costRecalc < 0.01).length;
+    const mid = allData.filter(r => r.costRecalc >= 0.01 && r.costRecalc < 0.50).length;
+    const premium = allData.filter(r => r.costRecalc >= 0.50).length;
+    const unreliable = allData.filter(r => r.unreliable === true).length;
+
+    const filters = [
+      ['all', `All (${total})`],
+      ['zero-misses', `Zero Misses (${zeroMisses})`],
+      ['clean', `Clean (0 RM, 0 FP) (${clean})`],
+      ['no-think', `No-Think (${noThink})`],
+      ['thinking', `Thinking (${thinking})`],
+      ['free', `Free (${free})`],
+      ['budget', `Budget <$0.01 (${budget})`],
+      ['mid', `Mid $0.01-$0.50 (${mid})`],
+      ['premium', `Premium $0.50+ (${premium})`],
+      ['unreliable', `⚠️ Unreliable (${unreliable})`],
+    ];
+
+    const container = document.getElementById('pills');
+    const current = activeFilter;
+    container.innerHTML = '';
+    filters.forEach(([key, label]) => {
+      const s = document.createElement('span');
+      s.className = 'pill' + (key === current ? ' active' : '');
+      s.dataset.filter = key;
+      s.textContent = label;
+      s.addEventListener('click', () => {
+        document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+        s.classList.add('active');
+        activeFilter = key;
+        render();
+      });
+      container.appendChild(s);
+    });
+  }
 
   // Render rows
   function render() {
@@ -407,11 +443,14 @@
     const isNoThink = r.model.includes('(no think)');
     switch(activeFilter) {
       case 'all': return true;
+      case 'zero-misses': return r.redMisses === 0 && r.greenFP === 0 && r.misses === 0;
       case 'clean': return r.redMisses === 0 && r.greenFP === 0;
       case 'no-think': return isNoThink;
       case 'thinking': return !isNoThink;
       case 'free': return r.costRecalc <= 0.001;
       case 'budget': return r.costRecalc > 0.001 && r.costRecalc < 0.01;
+      case 'mid': return r.costRecalc >= 0.01 && r.costRecalc < 0.50;
+      case 'premium': return r.costRecalc >= 0.50;
       case 'unreliable': return r.unreliable === true;
       default: return true;
     }
@@ -422,15 +461,8 @@
     return r.model.toLowerCase().includes(searchQuery);
   }
 
-  // Pill clicks
-  document.querySelectorAll('.pill').forEach(pill => {
-    pill.addEventListener('click', () => {
-      document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-      activeFilter = pill.dataset.filter;
-      render();
-    });
-  });
+  // Pill clicks handled inside updatePills()
+  updatePills();
 
   // Search
   searchInput.addEventListener('input', () => {
@@ -472,6 +504,8 @@
   });
 
   render();
+  // Also update meta card model count
+  document.querySelector('.meta-card .number') && (document.querySelector('.meta-card .number').textContent = allData.length);
 })();
 </script>
 

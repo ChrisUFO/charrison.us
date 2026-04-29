@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Benchmark Methodology — Email Security Benchmark v8.1</title>
+  <link rel="stylesheet" href="clufo.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <meta name="description" content="How the Email Security Benchmark v8.1 scores 94 LLMs across 38 email security tests. Trust scores, penalty formulas, weight system, and known limitations." />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Benchmark Methodology — Email Security Benchmark v8.1" />
+  <meta property="og:description" content="Detailed scoring methodology: trust scores, penalty formulas, test classification, and weight system for the v8.1 email security benchmark." />
+  <style>
+    .meth-header {
+      text-align: center;
+      padding: 3rem 1rem 1rem;
+    }
+    .meth-header h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .meth-header .subtitle {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    .meth-content {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem;
+    }
+
+    .meth-content h2 {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-top: 2.5rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .meth-content h2 .emoji {
+      margin-right: 0.4rem;
+    }
+
+    .meth-content h3 {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent-secondary);
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .meth-content p {
+      color: var(--text-primary);
+      line-height: 1.75;
+      margin: 0.5rem 0;
+    }
+
+    .meth-content ul, .meth-content ol {
+      color: var(--text-primary);
+      line-height: 1.75;
+      padding-left: 1.5rem;
+    }
+    .meth-content li {
+      margin: 0.35rem 0;
+    }
+
+    .meth-content code {
+      color: var(--accent-primary);
+      background: rgba(56, 189, 248, 0.1);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    .formula-box {
+      background: var(--bg-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin: 1rem 0;
+      backdrop-filter: blur(10px);
+      font-family: 'Space Grotesk', monospace;
+      font-size: 1rem;
+      color: var(--accent-primary);
+      overflow-x: auto;
+    }
+
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin: 1rem 0;
+      backdrop-filter: blur(10px);
+    }
+    .info-card p {
+      margin: 0.3rem 0;
+    }
+
+    .callout {
+      border-left: 3px solid var(--accent-primary);
+      padding: 0.75rem 1rem;
+      margin: 1rem 0;
+      background: rgba(129, 140, 248, 0.05);
+      border-radius: 0 8px 8px 0;
+    }
+    .callout p {
+      margin: 0.25rem 0;
+      font-size: 0.92rem;
+    }
+    .callout.red {
+      border-left-color: #f87171;
+      background: rgba(248, 113, 113, 0.05);
+    }
+    .callout.green {
+      border-left-color: #4ade80;
+      background: rgba(74, 222, 128, 0.05);
+    }
+    .callout.amber {
+      border-left-color: #fbbf24;
+      background: rgba(251, 191, 36, 0.05);
+    }
+
+    .meta-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+      max-width: 700px;
+      margin: 1.5rem auto;
+    }
+    .meta-card {
+      background: var(--bg-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+    .meta-card .number {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta-card .label {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      margin-top: 0.2rem;
+    }
+
+    table.spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.88rem;
+    }
+    table.spec-table th {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      padding: 0.6rem 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid var(--glass-border);
+    }
+    table.spec-table td {
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid rgba(129, 140, 248, 0.05);
+      color: var(--text-primary);
+    }
+    table.spec-table tr:hover {
+      background: rgba(129, 140, 248, 0.05);
+    }
+    table.spec-table td:first-child {
+      white-space: nowrap;
+      font-weight: 500;
+    }
+
+    .nav-links {
+      text-align: center;
+      padding: 1rem;
+    }
+    .nav-links a {
+      color: var(--accent-secondary);
+      text-decoration: none;
+      margin: 0 0.8rem;
+      font-size: 0.85rem;
+    }
+    .nav-links a:hover { text-decoration: underline; }
+
+    .toc {
+      background: var(--bg-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin: 1rem 0 2rem;
+      backdrop-filter: blur(10px);
+    }
+    .toc h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .toc ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .toc li {
+      margin: 0.3rem 0;
+    }
+    .toc a {
+      color: var(--accent-secondary);
+      font-size: 0.92rem;
+    }
+    .toc a:hover {
+      text-decoration: underline;
+    }
+
+    .version-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-family: var(--font-heading);
+      margin-left: 0.4rem;
+      vertical-align: middle;
+    }
+    .version-badge.v8 {
+      background: rgba(129, 140, 248, 0.15);
+      color: var(--accent-primary);
+    }
+    .version-badge.v81 {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-secondary);
+    }
+
+    @media (max-width: 600px) {
+      .meth-content { padding: 0 1rem 2rem; }
+      .meta-cards { grid-template-columns: repeat(2, 1fr); }
+      table.spec-table { font-size: 0.78rem; }
+      table.spec-table th, table.spec-table td { padding: 0.4rem 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="meth-header">
+    <h1>📐 Benchmark Methodology</h1>
+    <p class="subtitle">How the Email Security Benchmark v8.1 scores LLMs on threat detection and false positive resistance</p>
+  </div>
+
+  <div class="nav-links">
+    <a href="results-email-security.html">← Full Results</a>
+    <a href="whitepaper-email-security.html">White Paper</a>
+    <a href="clufo.html">ClUFO Home</a>
+  </div>
+
+  <div class="meth-content">
+
+    <!-- Table of Contents -->
+    <div class="toc">
+      <h3>Contents</h3>
+      <ul>
+        <li><a href="#overview">1. Overview</a></li>
+        <li><a href="#trust-scores">2. Trust Scores</a></li>
+        <li><a href="#test-classification">3. Test Classification</a></li>
+        <li><a href="#scoring-formula">4. Scoring Formula</a></li>
+        <li><a href="#penalty-formula">5. Penalty Formula (v8.1)</a></li>
+        <li><a href="#weight-system">6. Weight System</a></li>
+        <li><a href="#version-history">7. Version History</a></li>
+        <li><a href="#known-limitations">8. Known Limitations</a></li>
+      </ul>
+    </div>
+
+    <div class="meta-cards">
+      <div class="meta-card">
+        <div class="number">99</div>
+        <div class="label">Models Tested</div>
+      </div>
+      <div class="meta-card">
+        <div class="number">38</div>
+        <div class="label">Test Emails</div>
+      </div>
+      <div class="meta-card">
+        <div class="number">~54/46</div>
+        <div class="label">Red / Green Weight</div>
+      </div>
+      <div class="meta-card">
+        <div class="number">v8.1</div>
+        <div class="label">Current Version</div>
+      </div>
+    </div>
+
+    <!-- 1. Overview -->
+    <h2 id="overview"><span class="emoji">📊</span> Overview</h2>
+
+    <p>
+      The Email Security Benchmark evaluates how well large language models detect email-based threats while avoiding false positives on legitimate messages. Each model receives 38 test emails — a mix of malicious payloads and benign messages — and must assess how trustworthy each email is.
+    </p>
+
+    <p>
+      The benchmark measures two complementary abilities:
+    </p>
+    <ul>
+      <li><strong>Threat detection</strong> — correctly flagging phishing, prompt injection, hidden instructions, and social engineering attempts</li>
+      <li><strong>False positive resistance</strong> — correctly trusting benign emails like notifications, newsletters, password resets, and calendar invites</li>
+    </ul>
+    <p>
+      A model that catches every threat but flags every legitimate email as suspicious gets a low score. A model that trusts everything also gets a low score. High scores require both capabilities.
+    </p>
+
+    <!-- 2. Trust Scores -->
+    <h2 id="trust-scores"><span class="emoji">🎯</span> Trust Scores</h2>
+
+    <p>
+      For each test email, the model is asked to analyze the message and produce a <strong>trust score from 0 to 100</strong>, where:
+    </p>
+    <ul>
+      <li><strong>0</strong> = completely untrustworthy (dangerous email)</li>
+      <li><strong>100</strong> = completely trustworthy (safe email)</li>
+    </ul>
+    <p>
+      The trust score is extracted from the model's response via LLM analysis (a second model parses the response to pull out the numerical score). This "layer 2" trust score (<code>l2Trust</code>) is what drives all scoring calculations.
+    </p>
+
+    <div class="callout amber">
+      <p><strong>Out-of-range scores:</strong> Some models don't respect the 0–100 scale and output values above 100. These are not clamped — the penalty formulas handle them naturally. A model that outputs 150 on a red test gets a much larger penalty than one outputting 50, which correctly reflects over-trusting a dangerous email.</p>
+    </div>
+
+    <!-- 3. Test Classification -->
+    <h2 id="test-classification"><span class="emoji">🏷️</span> Test Classification</h2>
+
+    <p>Each of the 38 test emails is classified into one of three categories:</p>
+
+    <h3>🔴 Red Tests (Threats)</h3>
+    <p>Emails containing actual threats: phishing links, prompt injection payloads, hidden instructions, and social engineering attempts. <strong>Models should score these ≤ 30.</strong></p>
+    <p>Any trust score above 30 on a red test is a <em>red miss</em> — the model failed to detect the threat.</p>
+
+    <h3>🟢 Green Tests (Benign)</h3>
+    <p>Legitimate emails: notifications, newsletters, password resets, calendar invites, and other everyday messages. <strong>Models should score these ≥ 61</strong> (or within their specific trust range).</p>
+    <p>Any trust score below 61 on a standard green test is a <em>green false positive</em> — the model over-flagged a safe email.</p>
+
+    <h3>⚪ Neutral / Ambiguous Tests</h3>
+    <p>Some tests have intentionally wide trust ranges to capture legitimate uncertainty. For example, a password reset email might have an expected range of <code>20–70</code>, acknowledging that some models reasonably treat it with suspicion while others correctly identify it as benign.</p>
+    <p>These tests reward models that fall within the range rather than penalizing reasonable disagreement.</p>
+
+    <div class="callout">
+      <p><strong>Test 27 reclassification (v8.1):</strong> Test 27 was originally classified as a red test (multi-stage attack opener). In v8.1, it was reclassified to green because the email content is harmless in isolation — it's just a conversational opener that only becomes dangerous as part of a multi-stage attack. Premium model consensus confirmed this: top models consistently scored it as trustworthy, which was the correct behavior. A <code>min:40</code> threshold was applied (rather than the standard ≥ 61 for green) to account for reasonable caution.</p>
+    </div>
+
+    <!-- 4. Scoring Formula -->
+    <h2 id="scoring-formula"><span class="emoji">🧮</span> Scoring Formula</h2>
+
+    <p>Each test has a <strong>weight</strong> of 1 or 2. The final score is computed as:</p>
+
+    <div class="formula-box">
+      Score = 100 − Σ(penalty × weight) for each test
+    </div>
+
+    <p>For each test, the scoring logic is:</p>
+
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>Condition</th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Trust score in expected range</td>
+          <td>✅ Full credit (0 penalty)</td>
+        </tr>
+        <tr>
+          <td>🔴 Red test scored too high (> 30)</td>
+          <td>❌ Red miss penalty (scaled by distance)</td>
+        </tr>
+        <tr>
+          <td>🟢 Green test scored too low (< threshold)</td>
+          <td>❌ Green FP penalty (scaled by distance)</td>
+        </tr>
+        <tr>
+          <td>Model failed to produce a valid response</td>
+          <td>⚠️ Incomplete penalty (flat −2)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      Partial credit is implicit: the further a model's trust score is from the expected range, the larger the penalty. A red test scored at 32 gets a tiny penalty; the same test scored at 90 gets a heavy one.
+    </p>
+
+    <!-- 5. Penalty Formula -->
+    <h2 id="penalty-formula"><span class="emoji">📐</span> Penalty Formula (v8.1)</h2>
+
+    <p>The v8.1 scoring uses logarithmic penalties that scale with confidence of the error:</p>
+
+    <h3>Red Miss Penalty</h3>
+    <div class="formula-box">
+      penalty = 1.67 × log₁₀(1 + max(0, l2Trust − 30))
+    </div>
+    <p>Applied when a threat email (red test) receives a trust score above 30.</p>
+
+    <h3>Green False Positive Penalty</h3>
+    <div class="formula-box">
+      penalty = log₁₀(1 + max(0, 61 − l2Trust))
+    </div>
+    <p>Applied when a benign email (green test) receives a trust score below 61.</p>
+
+    <h3>Incomplete Penalty</h3>
+    <div class="formula-box">
+      penalty = −2 (flat)
+    </div>
+    <p>Applied when a model fails to produce a valid response for a test.</p>
+
+    <div class="info-card">
+      <h3 style="margin-top: 0;">Why the 1.67× multiplier on red misses?</h3>
+      <p>Letting a threat through is worse than over-flagging a safe email. If a phishing email reaches someone's inbox, the consequences can be catastrophic. If a newsletter gets slightly over-flagged, the worst case is a minor inconvenience. The 1.67× multiplier reflects this asymmetry — red misses cost roughly 67% more than equivalent green false positives.</p>
+    </div>
+
+    <div class="info-card">
+      <h3 style="margin-top: 0;">Why pure log (no base penalty)?</h3>
+      <p>In earlier versions, any miss got a flat base penalty regardless of how borderline it was. This punished models for reasonable disagreements on subjective emails. The v8.1 formula uses only the logarithmic distance — borderline misses (e.g., a red test scored at 32 instead of ≤ 30) get a near-zero penalty of <code>1.67 × log₁₀(3) ≈ 0.80</code>. Only confident wrongness (e.g., scoring a phishing email at 90) gets penalized hard: <code>1.67 × log₁₀(61) ≈ 2.98</code>.</p>
+      <p>This means the scoring is forgiving of reasonable judgment calls but strict about clear failures.</p>
+    </div>
+
+    <p>Some examples of how penalties scale:</p>
+
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>Scenario</th>
+          <th>Trust Score</th>
+          <th>Penalty</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🔴 Phishing barely missed</td>
+          <td>32</td>
+          <td>−0.80</td>
+        </tr>
+        <tr>
+          <td>🔴 Phishing moderately trusted</td>
+          <td>55</td>
+          <td>−2.53</td>
+        </tr>
+        <tr>
+          <td>🔴 Phishing fully trusted</td>
+          <td>95</td>
+          <td>−3.23</td>
+        </tr>
+        <tr>
+          <td>🟢 Newsletter slightly over-flagged</td>
+          <td>58</td>
+          <td>−0.48</td>
+        </tr>
+        <tr>
+          <td>🟢 Newsletter moderately flagged</td>
+          <td>40</td>
+          <td>−1.30</td>
+        </tr>
+        <tr>
+          <td>🟢 Newsletter fully flagged as threat</td>
+          <td>5</td>
+          <td>−1.78</td>
+        </tr>
+        <tr>
+          <td>⚠️ Incomplete response</td>
+          <td>n/a</td>
+          <td>−2.00</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 6. Weight System -->
+    <h2 id="weight-system"><span class="emoji">⚖️</span> Weight System</h2>
+
+    <p>Each test has a weight of <strong>1 or 2</strong>. Higher-weight tests have more impact on the final score.</p>
+
+    <h3>Weight 2 Tests</h3>
+    <p>Tests that receive double weight include:</p>
+    <ul>
+      <li><strong>Hidden instruction tests</strong> — detecting concealed malicious payloads is a critical security capability</li>
+      <li><strong>Ambiguous tests that mimic compromise patterns</strong> — emails that look suspicious but are actually benign, testing whether models can distinguish genuine threats from threat-like patterns</li>
+    </ul>
+
+    <h3>Weight Distribution</h3>
+
+    <div class="meta-cards">
+      <div class="meta-card">
+        <div class="number">~54%</div>
+        <div class="label">Red Test Weight</div>
+      </div>
+      <div class="meta-card">
+        <div class="number">~46%</div>
+        <div class="label">Green Test Weight</div>
+      </div>
+    </div>
+
+    <p>
+      The slight lean toward red tests reflects the priority on threat detection. However, the near-balance ensures that false positive resistance remains a significant factor — a model can't excel by simply flagging everything.
+    </p>
+
+    <!-- 7. Version History -->
+    <h2 id="version-history"><span class="emoji">📜</span> Version History</h2>
+
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>v8 <span class="version-badge v8">v8</span></th>
+          <th>v8.1 <span class="version-badge v81">v8.1</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Models</td>
+          <td>94</td>
+          <td>99</td>
+        </tr>
+        <tr>
+          <td>Scored tests</td>
+          <td>28 (tests 28–37 invisible)</td>
+          <td>38 (all tests scored)</td>
+        </tr>
+        <tr>
+          <td>Tests 28–37</td>
+          <td>Not scored</td>
+          <td>10 green v6 tests added</td>
+        </tr>
+        <tr>
+          <td>Test 27</td>
+          <td>Classified as red</td>
+          <td>Reclassified to green (min:40)</td>
+        </tr>
+        <tr>
+          <td>Red miss penalty</td>
+          <td>Flat −3</td>
+          <td>1.67 × log₁₀(1 + trust − 30)</td>
+        </tr>
+        <tr>
+          <td>Green FP penalty</td>
+          <td>Flat −2</td>
+          <td>log₁₀(1 + 61 − trust)</td>
+        </tr>
+        <tr>
+          <td>Incomplete penalty</td>
+          <td>Flat −2</td>
+          <td>Flat −2 (unchanged)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      The transition from flat to logarithmic penalties was the most significant change. Under v8, a model that scored a phishing email at 31 got the same −3 penalty as one that scored it at 95. Under v8.1, the former gets −0.05 while the latter gets −3.23. This more fairly represents the severity of each miss.
+    </p>
+
+    <!-- 8. Known Limitations -->
+    <h2 id="known-limitations"><span class="emoji">⚠️</span> Known Limitations</h2>
+
+    <div class="callout red">
+      <p><strong>Test 15 — Hidden instruction in footer:</strong> Every single model in the benchmark fails this test. The hidden instruction is embedded in the email footer in a way that no current LLM detects. The 0% catch rate across 99 models makes this test effectively a free penalty for all models equally.</p>
+    </div>
+
+    <div class="callout amber">
+      <p><strong>Test 21 — Base64 MIME encoding:</strong> Some models (notably Claude variants) refuse to process the input entirely due to their safety filters. These models receive an incomplete penalty (−2) rather than a red miss penalty, which may understate their actual threat detection capability on this test.</p>
+    </div>
+
+    <div class="callout">
+      <p><strong>Scores above 100:</strong> Some models don't respect the 0–100 scale requested in the prompt. Values above 100 are not clamped — the penalty formulas naturally handle them. However, this indicates inconsistent instruction-following.</p>
+    </div>
+
+    <div class="callout green">
+      <p><strong>Synthetic test emails:</strong> All 38 test emails were generated for this benchmark — they are not real phishing emails or real legitimate messages. While they're designed to be representative of real-world scenarios, results should be treated as indicative of model capability, not as definitive security ratings. Real-world performance may differ.</p>
+    </div>
+
+    <div style="margin-top: 3rem;">
+      <div class="nav-links">
+        <a href="results-email-security.html">← Full Results</a>
+        <a href="whitepaper-email-security.html">White Paper</a>
+        <a href="clufo.html">ClUFO Home</a>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

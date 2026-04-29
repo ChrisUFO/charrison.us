@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Email Security Benchmark — Model Detail</title>
+  <title>Email Security Benchmark v8.5 — Model Detail</title>
   <link rel="stylesheet" href="clufo.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -43,7 +43,7 @@
       gap: 0.75rem;
       justify-content: center;
       margin: 1rem auto;
-      max-width: 700px;
+      max-width: 900px;
       padding: 0 1rem;
     }
     .stat {
@@ -83,8 +83,8 @@
       padding: 0.9rem 1rem;
       backdrop-filter: blur(10px);
     }
-    .test-card.invalid { opacity: 0.5; }
-    .test-card.miss { border-color: rgba(248, 113, 113, 0.3); }
+    .test-card.red-miss { border-color: rgba(248, 113, 113, 0.3); background: rgba(248, 113, 113, 0.03); }
+    .test-card.green-fp { border-color: rgba(251, 191, 36, 0.3); background: rgba(251, 191, 36, 0.03); }
     .test-top {
       display: flex;
       justify-content: space-between;
@@ -109,39 +109,78 @@
       border-radius: 4px;
       font-weight: 500;
     }
-    .badge-trust { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
-    .badge-l3 { background: rgba(192, 132, 252, 0.15); color: #c084fc; }
+    .badge-cov { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+    .badge-expert { background: rgba(192, 132, 252, 0.15); color: #c084fc; }
     .badge-miss { background: rgba(248, 113, 113, 0.2); color: #f87171; }
+    .badge-fp { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
     .badge-ok { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
     .badge-warn { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
-    .badge-err { background: rgba(248, 113, 113, 0.2); color: #f87171; }
-    .test-summary {
-      color: var(--text-secondary);
-      font-size: 0.82rem;
-      line-height: 1.5;
-      margin-bottom: 0.5rem;
-    }
-    .test-details {
+    .badge-range { background: rgba(248, 113, 113, 0.15); color: #fb7185; }
+    .badge-threat { background: rgba(248, 113, 113, 0.1); color: #f87171; }
+    .badge-safe { background: rgba(74, 222, 128, 0.1); color: #4ade80; }
+    .test-scores {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.6rem;
-      font-size: 0.78rem;
+      gap: 1rem;
+      font-size: 0.82rem;
+      margin-bottom: 0.4rem;
     }
-    .detail-item { color: var(--text-secondary); }
-    .detail-item strong { color: var(--text-primary); font-weight: 500; }
-    .concerns-list {
-      margin: 0.3rem 0 0 0.5rem;
-      padding: 0;
-      list-style: none;
+    .score-pair {
+      display: flex;
+      gap: 0.3rem;
+      align-items: baseline;
     }
-    .concerns-list li {
+    .score-label {
+      color: var(--text-secondary);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .score-val {
+      font-weight: 600;
+      font-family: var(--font-heading);
+    }
+    .score-val.high { color: #f87171; }
+    .score-val.low { color: #4ade80; }
+    .score-val.neutral { color: var(--text-primary); }
+    .score-val.in-range { color: #4ade80; }
+    .score-val.out-range { color: #f87171; }
+    .range-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
       font-size: 0.75rem;
       color: var(--text-secondary);
-      padding: 1px 0;
+      margin-top: 0.3rem;
     }
-    .concerns-list li::before {
-      content: '⚠';
-      margin-right: 4px;
+    .range-visual {
+      position: relative;
+      width: 120px;
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .range-fill {
+      position: absolute;
+      height: 100%;
+      background: rgba(74, 222, 128, 0.3);
+      border-radius: 4px;
+    }
+    .range-marker {
+      position: absolute;
+      top: -2px;
+      width: 2px;
+      height: 12px;
+      border-radius: 1px;
+    }
+    .marker-cov { background: #38bdf8; }
+    .marker-expert { background: #c084fc; }
+    .detail-text {
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      margin-top: 0.3rem;
+      line-height: 1.5;
     }
     .loading {
       text-align: center;
@@ -150,7 +189,7 @@
       font-size: 1.1rem;
     }
     .summary-section {
-      max-width: 700px;
+      max-width: 900px;
       margin: 1.5rem auto;
       padding: 0 1rem;
     }
@@ -175,7 +214,7 @@
     }
     .summary-breakdown {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 0.5rem;
       margin-top: 0.8rem;
     }
@@ -200,25 +239,23 @@
     .bi-val.bad { color: #f87171; }
     .bi-val.warn { color: #fbbf24; }
     .bi-val.neutral { color: var(--text-primary); }
-    @media (max-width: 600px) {
-      .summary-breakdown { grid-template-columns: 1fr; }
-    }
     .error-msg {
       text-align: center;
       padding: 4rem 1rem;
       color: #f87171;
     }
     @media (max-width: 600px) {
+      .summary-breakdown { grid-template-columns: 1fr 1fr; }
       .stats-row { flex-direction: column; align-items: stretch; }
       .stat { min-width: auto; }
       .test-top { flex-direction: column; align-items: flex-start; }
     }
-  .unreliable-banner { background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.4); border-radius: 8px; padding: 12px 16px; color: #f59e0b; margin-bottom: 16px; font-size: 14px; }</style>
+  </style>
 </head>
 <body>
 
   <div class="back-bar">
-    <a href="results-email-security.html">← Back to Full Results</a>
+    <a href="results-email-security.html">← Back to Leaderboard</a>
   </div>
 
   <div class="model-header">
@@ -256,152 +293,190 @@
 
   const model = data[modelKey];
   if (!model) {
-    document.getElementById('tests').innerHTML = '<div class="error-msg">Model "' + decodeURIComponent(modelKey) + '" not found.</div>';
+    document.getElementById('tests').innerHTML = '<div class="error-msg">Model "' + escapeHTML(decodeURIComponent(modelKey)) + '" not found.</div>';
     return;
   }
 
+  // Expand short keys
+  const name = model.n;
+  const source = model.s;
+  const covScore = model.cv;
+  const expertScore = model.ex;
+  const compositeScore = model.cs;
+  const divergenceRate = model.dr;
+  const redMisses = model.rm;
+  const greenFPs = model.gf;
+  const rangePenalties = model.rp;
+  const totalCost = model.tc;
+  const tests = model.t || [];
+
+  // Separate CoV and Expert tests
+  const covTests = tests.filter(t => t.m === 'cov');
+  const expertTests = tests.filter(t => t.m === 'expert');
+
   // Header
-  document.getElementById('model-name').textContent = model.name;
-  document.getElementById('model-sub').textContent = model.id + (model.source === 'ollama' ? ' (local)' : model.source === 'zai' ? ' (Z.AI)' : '');
+  document.getElementById('model-name').textContent = name;
+  document.getElementById('model-sub').textContent = 'v8.5 · CoV + Expert dual-prompt';
 
   // Stats
-  const totalTests = model.tests.length;
-  const validTests = model.tests.filter(t => t.valid).length;
-  const threatTests = model.tests.filter(t => !t.email.includes('informational') && !t.email.includes('benign') && !t.email.includes('simple') && !t.email.includes('newsletter') && !t.email.includes('marketing') && !t.email.includes('internal') && !t.email.includes('simple_informational') && !t.email.includes('jenny') && !t.email.includes('friendly') && !t.email.includes('follow-up'));
-  // Better approach: use L3 data to identify threats (L3 lowered trust)
-  const threatMisses = model.tests.filter(t => t.valid && t.l3Calculated !== undefined && t.l3Calculated > 30).length;
-  const totalTime = (model.totalTime / 60).toFixed(1);
-  const totalCost = model.totalCost ? '$' + model.totalCost.toFixed(4) : 'Free';
-
-  // Calculate misses: valid tests where final trust (L3 calc) > 30 for threatening emails
-  // Use trust score < 10 as threat detected baseline
-  const threats = model.tests.filter(t => t.valid && t.trustScore !== undefined && t.l3Calculated !== undefined);
-  const missed = threats.filter(t => t.l3Calculated > 30);
-  const caught = threats.filter(t => t.l3Calculated <= 30);
-
   document.getElementById('stats').innerHTML =
-    '<div class="stat"><div class="val">' + validTests + '/' + totalTests + '</div><div class="lbl">Valid</div></div>' +
-    '<div class="stat"><div class="val">' + missed.length + '</div><div class="lbl">Misses</div></div>' +
-    '<div class="stat"><div class="val">' + totalTime + 'm</div><div class="lbl">Time</div></div>' +
-    '<div class="stat"><div class="val">' + totalCost + '</div><div class="lbl">Cost</div></div>' +
-    '<div class="stat"><div class="val">' + model.source + '</div><div class="lbl">Source</div></div>';
+    '<div class="stat"><div class="val">' + (compositeScore || '—') + '</div><div class="lbl">Composite</div></div>' +
+    '<div class="stat"><div class="val">' + (covScore !== null ? covScore : '—') + '</div><div class="lbl">CoV Score</div></div>' +
+    '<div class="stat"><div class="val">' + (expertScore !== null ? expertScore : '—') + '</div><div class="lbl">Expert Score</div></div>' +
+    '<div class="stat"><div class="val">' + (divergenceRate || 0) + '%</div><div class="lbl">Divergence</div></div>' +
+    '<div class="stat"><div class="val">' + redMisses + '</div><div class="lbl">Red Misses</div></div>' +
+    '<div class="stat"><div class="val">' + greenFPs + '</div><div class="lbl">Green FP</div></div>' +
+    '<div class="stat"><div class="val">' + rangePenalties + '</div><div class="lbl">Range Pen</div></div>' +
+    '<div class="stat"><div class="val">$' + totalCost.toFixed(2) + '</div><div class="lbl">Total Cost</div></div>';
 
-  // Generate summary (or unreliable explanation)
-  const hasExtractableTrust = model.tests.some(t => t.trustScore !== null && t.trustScore !== undefined);
-  if (!hasExtractableTrust) {
-    const summaryEl = document.getElementById('summary');
-    summaryEl.innerHTML = '<div class="summary-card"><h2>📊 Performance Summary</h2>' +
-      '<p class="summary-text">' + model.name + ' was flagged as <strong>unreliable</strong> and excluded from rankings because it <strong>cannot reliably generate JSON responses</strong>. ' +
-      'Of 29 test emails, only 20 produced parseable JSON output — the other 9 returned completely invalid responses that could not be parsed at all. ' +
-      'Among the 20 "valid" results, the tokenizer still injected garbage tokens into the JSON structure (e.g., <code>:{",:null,</code> between keys and values), ' +
-      'making trust scores and other extracted fields unreliable or unextractable. ' +
-      'Only 2 of 20 valid tests yielded readable trust scores: trust 88 on a benign verification link (correct) and trust 2 on a hidden footer instruction (correct — but not enough data to assess overall calibration). ' +
-      'This is a tokenizer-level issue, not a model capability issue — the underlying model may perform well, but its tokenizer corrupts structured JSON output in ways that prevent reliable evaluation.</p>' +
-      '<div class="summary-breakdown">' +
-      '<div class="breakdown-item"><div class="bi-label">Parseable Responses</div><div class="bi-val bad">20/29</div></div>' +
-      '<div class="breakdown-item"><div class="bi-label">Extractable Trust Scores</div><div class="bi-val bad">2/20</div></div>' +
-      '<div class="breakdown-item"><div class="bi-label">Root Cause</div><div class="bi-val" style="font-size:0.75rem;">Tokenizer JSON corruption</div></div>' +
-      '<div class="breakdown-item"><div class="bi-label">Ranking Status</div><div class="bi-val" style="color:#f59e0b;">Excluded</div></div>' +
-      '</div></div>';
-  } else {
-    generateSummary(model, missed, caught, validTests, totalTests);
-  }
+  // Build per-test merged view: match CoV and Expert by label
+  const covByLabel = {};
+  const expertByLabel = {};
+  covTests.forEach(t => { covByLabel[t.l] = t; });
+  expertTests.forEach(t => { expertByLabel[t.l] = t; });
+
+  // Get all unique labels (preserving CoV order)
+  const allLabels = [...new Set([...covTests.map(t => t.l), ...expertTests.map(t => t.l)])];
+
+  // Sort: red misses first, then green FP, then by divergence, then by label
+  const mergedTests = allLabels.map(label => ({
+    label,
+    cov: covByLabel[label] || null,
+    expert: expertByLabel[label] || null,
+  }));
+
+  mergedTests.sort((a, b) => {
+    const aRedMiss = isRedMiss(a);
+    const bRedMiss = isRedMiss(b);
+    if (aRedMiss && !bRedMiss) return -1;
+    if (!aRedMiss && bRedMiss) return 1;
+    const aGreenFP = isGreenFP(a);
+    const bGreenFP = isGreenFP(b);
+    if (aGreenFP && !bGreenFP) return -1;
+    if (!aGreenFP && bGreenFP) return 1;
+    // Sort by max trust score (worst first)
+    const aMax = Math.max(a.cov ? a.cov.v : 0, a.expert ? a.expert.v : 0);
+    const bMax = Math.max(b.cov ? b.cov.v : 0, b.expert ? b.expert.v : 0);
+    return bMax - aMax;
+  });
+
+  // Summary
+  generateSummary(name, covScore, expertScore, compositeScore, divergenceRate, redMisses, greenFPs, rangePenalties, mergedTests);
 
   // Test cards
   const testsEl = document.getElementById('tests');
   testsEl.innerHTML = '';
 
-  // Sort: misses first, then by trust descending
-  const sorted = [...model.tests].sort((a, b) => {
-    if (!a.valid && b.valid) return 1;
-    if (a.valid && !b.valid) return -1;
-    const aMiss = a.l3Calculated !== undefined ? a.l3Calculated > 30 : false;
-    const bMiss = b.l3Calculated !== undefined ? b.l3Calculated > 30 : false;
-    if (aMiss && !bMiss) return -1;
-    if (!aMiss && bMiss) return 1;
-    return ((b.l3Calculated || b.trustScore || 0) - (a.l3Calculated || a.trustScore || 0));
-  });
+  mergedTests.forEach(m => {
+    const { label, cov, expert } = m;
+    const isThreat = (cov && cov.th) || (expert && expert.th);
+    const classification = (cov && cov.ok !== undefined) ? (cov.th ? 'threat' : 'safe') : ((expert && expert.th) ? 'threat' : 'safe');
 
-  for (const t of sorted) {
-    const isInvalid = !t.valid;
-    const isMiss = t.valid && t.l3Calculated !== undefined && t.l3Calculated > 30;
+    const redMiss = isRedMiss(m);
+    const greenFP = isGreenFP(m);
+    const outOfRange = isOutOfRange(m);
 
-    let trustBadge = '';
-    if (t.trustScore !== undefined) {
-      trustBadge = '<span class="badge badge-trust">Raw: ' + t.trustScore + '</span>';
-    }
-    let l3Badge = '';
-    if (t.l3Calculated !== undefined) {
-      l3Badge = '<span class="badge badge-l3">L3: ' + t.l3Calculated + '</span>';
-    }
-    let statusBadge = '';
-    if (isInvalid) {
-      statusBadge = '<span class="badge badge-err">Invalid</span>';
-    } else if (isMiss) {
-      statusBadge = '<span class="badge badge-miss">Missed</span>';
-    } else if (t.l3Calculated !== undefined && t.l3Calculated <= 10) {
-      statusBadge = '<span class="badge badge-ok">Caught</span>';
-    } else {
-      statusBadge = '<span class="badge badge-warn">Review</span>';
-    }
-    let urgBadge = '';
-    if (t.urgency) {
-      urgBadge = '<span class="badge" style="background:rgba(129,140,248,0.1);color:var(--text-secondary);">' + t.urgency + '</span>';
-    }
+    const cls = (redMiss ? ' red-miss' : '') + (greenFP ? ' green-fp' : '');
 
-    const cls = (isInvalid ? ' invalid' : '') + (isMiss ? ' miss' : '');
     let html = '<div class="test-card' + cls + '">';
+
+    // Top row: label + badges
     html += '<div class="test-top">';
-    html += '<span class="test-name">' + t.email + '</span>';
-    html += '<div class="test-badges">' + statusBadge + trustBadge + l3Badge + urgBadge + '</div>';
+    html += '<span class="test-name">' + escapeHTML(label) + '</span>';
+    html += '<div class="test-badges">';
+    html += '<span class="badge ' + (isThreat ? 'badge-threat' : 'badge-safe') + '">' + (isThreat ? 'Threat' : 'Safe') + '</span>';
+    if (redMiss) html += '<span class="badge badge-miss">Red Miss</span>';
+    if (greenFP) html += '<span class="badge badge-fp">Green FP</span>';
+    if (outOfRange) html += '<span class="badge badge-range">Out of Range</span>';
+    html += '</div></div>';
+
+    // Score comparison
+    html += '<div class="test-scores">';
+
+    if (cov) {
+      const inRange = cov.v >= cov.rn && cov.v <= cov.rx;
+      html += '<div class="score-pair"><span class="score-label">CoV</span> <span class="score-val ' + (inRange ? 'in-range' : 'out-range') + '">' + cov.v + '</span></div>';
+    }
+    if (expert) {
+      const inRange = expert.v >= expert.rn && expert.v <= expert.rx;
+      html += '<div class="score-pair"><span class="score-label">Expert</span> <span class="score-val ' + (inRange ? 'in-range' : 'out-range') + '">' + expert.v + '</span></div>';
+    }
+
+    // Expert range
+    const ref = cov || expert;
+    if (ref) {
+      html += '<div class="score-pair"><span class="score-label">Expert Panel</span> <span class="score-val neutral">' + ref.rn.toFixed(1) + '–' + ref.rx.toFixed(1) + '</span>';
+      html += ' <span style="color:var(--text-secondary);font-size:0.7rem;">(mean ' + ref.em.toFixed(1) + ')</span></div>';
+    }
+
+    // Divergence between CoV and Expert
+    if (cov && expert) {
+      const diff = Math.abs(cov.v - expert.v);
+      const divCls = diff > 20 ? 'high' : diff > 10 ? 'warn' : 'neutral';
+      html += '<div class="score-pair"><span class="score-label">Δ</span> <span class="score-val ' + divCls + '">' + diff + '</span></div>';
+    }
+
     html += '</div>';
 
-    if (t.summary) {
-      html += '<div class="test-summary">' + escapeHTML(t.summary) + '</div>';
-    }
-    if (t.error) {
-      html += '<div class="test-summary" style="color:#f87171;">Error: ' + escapeHTML(t.error) + '</div>';
-    }
-
-    // L3 override details
-    if (t.l3Overrides && t.l3Overrides.length > 0) {
-      html += '<div style="margin-top:0.3rem;">';
-      html += '<span class="detail-item" style="color:#c084fc;font-size:0.75rem;">L3 Corrections:</span>';
-      t.l3Overrides.forEach(o => {
-        html += '<span class="badge badge-l3" style="font-size:0.6rem;">' + escapeHTML(o) + '</span> ';
-      });
+    // Range visual bar
+    if (ref) {
+      html += '<div class="range-bar">';
+      html += '<span>0</span>';
+      html += '<div class="range-visual">';
+      // Range fill
+      const left = ref.rn;
+      const width = ref.rx - ref.rn;
+      html += '<div class="range-fill" style="left:' + left + '%;width:' + width + '%;"></div>';
+      // CoV marker
+      if (cov) {
+        html += '<div class="range-marker marker-cov" style="left:' + Math.min(cov.v, 100) + '%;" title="CoV: ' + cov.v + '"></div>';
+      }
+      // Expert marker
+      if (expert) {
+        html += '<div class="range-marker marker-expert" style="left:' + Math.min(expert.v, 100) + '%;" title="Expert: ' + expert.v + '"></div>';
+      }
       html += '</div>';
-    }
-    if (t.l3ConcernCategories && t.l3ConcernCategories.length > 0) {
-      html += '<ul class="concerns-list">';
-      t.l3ConcernCategories.forEach(c => {
-        html += '<li>' + escapeHTML(c) + '</li>';
-      });
-      html += '</ul>';
-    }
-
-    // Red flags (first 3)
-    if (t.redFlags && t.redFlags.length > 0) {
-      html += '<div style="margin-top:0.3rem;font-size:0.75rem;color:var(--text-secondary);">';
-      html += '<strong style="color:var(--text-primary);">Red flags:</strong> ';
-      html += t.redFlags.slice(0, 3).map(f => escapeHTML(f)).join(' &middot; ');
-      if (t.redFlags.length > 3) html += ' +' + (t.redFlags.length - 3) + ' more';
+      html += '<span>100</span>';
+      html += '<span style="font-size:0.65rem;color:var(--text-secondary);margin-left:0.5rem;"><span style="color:#38bdf8;">■</span> CoV <span style="color:#c084fc;">■</span> Expert</span>';
       html += '</div>';
     }
 
-    // Meta
-    html += '<div class="test-details" style="margin-top:0.4rem;">';
-    if (t.elapsed) html += '<span class="detail-item"><strong>' + (t.elapsed/1000).toFixed(1) + 's</strong></span>';
-    if (t.cost) html += '<span class="detail-item"><strong>$' + t.cost.toFixed(4) + '</strong></span>';
-    if (t.senderIntent) html += '<span class="detail-item">Intent: <strong>' + escapeHTML(t.senderIntent) + '</strong></span>';
-    if (t.topics && t.topics.length > 0) html += '<span class="detail-item">Topics: <strong>' + t.topics.join(', ') + '</strong></span>';
-    html += '</div>';
+    // Red flags
+    if (cov && cov.fl && cov.fl.length > 0) {
+      html += '<div class="detail-text"><strong style="color:var(--text-primary);">Red flags:</strong> ' + cov.fl.slice(0, 4).map(f => escapeHTML(f)).join(' · ') + (cov.fl.length > 4 ? ' +' + (cov.fl.length - 4) + ' more' : '') + '</div>';
+    }
+
+    // Threat type
+    if (expert && expert.tt && expert.tt !== 'none') {
+      html += '<div class="detail-text"><strong style="color:var(--text-primary);">Threat type:</strong> ' + escapeHTML(expert.tt) + '</div>';
+    }
 
     html += '</div>';
     testsEl.innerHTML += html;
+  });
+
+  document.title = name + ' — Benchmark v8.5 Detail';
+
+  // Helper functions
+  function isRedMiss(m) {
+    // Threat email where model gave high trust (missed the threat)
+    if (!m.cov || !m.cov.th) return false;
+    return m.cov.v > 40;
   }
 
-  document.title = model.name + ' — Benchmark Detail';
+  function isGreenFP(m) {
+    // Safe email where model gave low trust (false positive)
+    if (!m.cov || m.cov.th) return false;
+    return m.cov.v < 40;
+  }
+
+  function isOutOfRange(m) {
+    const check = (t) => {
+      if (!t || t.rn === undefined) return false;
+      return t.v < t.rn || t.v > t.rx;
+    };
+    return check(m.cov) || check(m.expert);
+  }
 })();
 
 function escapeHTML(str) {
@@ -410,126 +485,89 @@ function escapeHTML(str) {
   return div.innerHTML;
 }
 
-function generateSummary(model, missed, caught, validTests, totalTests) {
-  const tests = model.tests.filter(t => t.valid);
+function generateSummary(name, covScore, expertScore, compositeScore, divergenceRate, redMisses, greenFPs, rangePenalties, mergedTests) {
   const summaryEl = document.getElementById('summary');
 
-  // Categorize tests
-  const categories = {
-    phishing: { label: 'Phishing', tests: [] },
-    social: { label: 'Social Engineering', tests: [] },
-    injection: { label: 'Prompt Injection', tests: [] },
-    benign: { label: 'Benign', tests: [] }
-  };
+  // Count threat/safe tests
+  const threatTests = mergedTests.filter(m => m.cov && m.cov.th);
+  const safeTests = mergedTests.filter(m => m.cov && !m.cov.th);
 
-  tests.forEach(t => {
-    const e = t.email.toLowerCase();
-    if (e.includes('phishing') || e.includes('unicode homoglyph') || e.includes('oauth')) {
-      categories.phishing.tests.push(t);
-    } else if (e.includes('social') || e.includes('credential harvest') || e.includes('reply-chain') || e.includes('password reset')) {
-      categories.social.tests.push(t);
-    } else if (e.includes('prompt injection') || e.includes('hidden instruction')) {
-      categories.injection.tests.push(t);
-    } else {
-      categories.benign.tests.push(t);
-    }
-  });
+  // Count caught threats (trust < 40)
+  const caughtThreats = threatTests.filter(m => m.cov && m.cov.v <= 40).length;
+  const missedThreats = threatTests.filter(m => m.cov && m.cov.v > 40).length;
+  const totalThreats = threatTests.length;
 
-  // Count catches per category
-  const threshold = 30;
-  const catStats = {};
-  for (const [key, cat] of Object.entries(categories)) {
-    const catches = cat.tests.filter(t => t.l3Calculated <= threshold).length;
-    const total = cat.tests.length;
-    catStats[key] = { catches, total, pct: total > 0 ? Math.round(catches/total*100) : 0 };
-  }
-
-  // False positives on benign
-  const benignFP = categories.benign.tests.filter(t => t.l3Calculated <= threshold).length;
-  const benignTotal = categories.benign.tests.length;
+  // False positives on safe emails
+  const falsePos = safeTests.filter(m => m.cov && m.cov.v < 40).length;
+  const totalSafe = safeTests.length;
 
   // Average trust scores
-  const avgRaw = tests.length > 0 ? (tests.reduce((s,t) => s + (t.trustScore || 0), 0) / tests.length).toFixed(1) : 0;
-  const avgL3 = tests.length > 0 ? (tests.reduce((s,t) => s + (t.l3Calculated || 0), 0) / tests.length).toFixed(1) : 0;
-  const threatAvgL3 = caught.concat(missed).length > 0
-    ? (caught.concat(missed).reduce((s,t) => s + (t.l3Calculated || 0), 0) / caught.concat(missed).length).toFixed(1) : 0;
+  const avgCovTrust = mergedTests.filter(m => m.cov).reduce((s, m) => s + m.cov.v, 0) / mergedTests.filter(m => m.cov).length || 0;
+  const avgExpertTrust = mergedTests.filter(m => m.expert).reduce((s, m) => s + m.expert.v, 0) / mergedTests.filter(m => m.expert).length || 0;
 
-  // Hardest tests for this model (highest L3 trust among threats)
-  const threatTests = tests.filter(t => {
-    const e = t.email.toLowerCase();
-    return e.includes('phishing') || e.includes('social') || e.includes('credential') ||
-           e.includes('reply-chain') || e.includes('prompt injection') || e.includes('hidden instruction') ||
-           e.includes('unicode') || e.includes('oauth') || e.includes('password');
-  });
-  threatTests.sort((a,b) => (b.l3Calculated||0) - (a.l3Calculated||0));
-  const hardest = threatTests.slice(0, 3);
+  // Average trust on threat emails
+  const threatCovTrust = threatTests.length > 0 ? threatTests.reduce((s, m) => s + (m.cov ? m.cov.v : 0), 0) / threatTests.length : 0;
 
   // Build summary text
-  let text = '';
-  if (validTests < totalTests) {
-    text += model.name + ' did not complete all tests (' + validTests + '/' + totalTests + ' valid). ';
-  }
-  text += 'Of ' + validTests + ' valid tests, ' + model.name + ' caught ' + caught.length + ' threats and missed ' + missed.length + '. ';
-
-  if (benignFP === 0 && benignTotal > 0) {
-    text += 'No false positives on benign emails. ';
-  } else if (benignFP > 0) {
-    text += 'Flagged ' + benignFP + ' of ' + benignTotal + ' benign emails as threats (false positives). ';
-  }
-
-  // Highlight category strengths/weaknesses
-  const weakCats = Object.entries(catStats).filter(([k,v]) => v.pct < 80 && v.total > 0);
-  const strongCats = Object.entries(catStats).filter(([k,v]) => v.pct === 100 && v.total > 0);
-  if (weakCats.length > 0) {
-    text += 'Weakest areas: ' + weakCats.map(([k,v]) => categories[k].label + ' (' + v.pct + '% caught)').join(', ') + '. ';
-  }
-  if (strongCats.length > 0) {
-    text += 'Perfect on: ' + strongCats.map(([k,v]) => categories[k].label).join(', ') + '. ';
-  }
-
-  // Average trust context
-  text += 'Average L3 trust on threats: ' + threatAvgL3 + '/100 (lower = more cautious). ';
-
-  // Hardest tests
-  if (hardest.length > 0) {
-    const hardestNames = hardest.filter(t => t.l3Calculated > 30).map(t => t.email);
-    if (hardestNames.length > 0) {
-      text += 'Most challenging: ' + hardestNames.join(', ') + '.';
+  let text = name + ' scored a composite of ' + (compositeScore || '—') + '. ';
+  if (covScore !== null && expertScore !== null) {
+    text += 'CoV score: ' + covScore + ', Expert score: ' + expertScore + '. ';
+    if (covScore === expertScore) {
+      text += 'Perfect agreement between methods. ';
+    } else {
+      text += 'Divergence between methods: ' + divergenceRate + '% of tests. ';
     }
   }
 
-  // Score context
-  const lbData = []; // We don't have leaderboard on this page, skip rank
+  text += 'Caught ' + caughtThreats + ' of ' + totalThreats + ' threats';
+  if (missedThreats > 0) text += ' (' + missedThreats + ' missed)';
+  text += '. ';
+
+  if (falsePos > 0) {
+    text += 'Flagged ' + falsePos + ' of ' + totalSafe + ' safe emails as threats (false positives). ';
+  } else if (totalSafe > 0) {
+    text += 'No false positives on safe emails. ';
+  }
+
+  text += 'Average trust on threat emails: ' + threatCovTrust.toFixed(1) + '/100 (lower = more cautious). ';
+
+  // Range penalty context
+  if (rangePenalties > 0) {
+    text += 'Scored outside expert panel range on ' + rangePenalties + ' of 37 tests.';
+  } else {
+    text += 'All scores within expert panel ranges.';
+  }
 
   let html = '<div class="summary-card">';
   html += '<h2>📊 Performance Summary</h2>';
   html += '<p class="summary-text">' + escapeHTML(text) + '</p>';
 
-  // Breakdown grid
   html += '<div class="summary-breakdown">';
   const addBI = (label, val, cls) => {
     html += '<div class="breakdown-item"><div class="bi-label">' + label + '</div><div class="bi-val ' + cls + '">' + val + '</div></div>';
   };
-  addBI('Threats Caught', caught.length + '/' + (caught.length + missed.length), missed.length === 0 ? 'good' : missed.length <= 2 ? 'warn' : 'bad');
-  addBI('Phishing', catStats.phishing.pct + '%', catStats.phishing.pct >= 90 ? 'good' : catStats.phishing.pct >= 70 ? 'warn' : 'bad');
-  addBI('Social Engineering', catStats.social.pct + '%', catStats.social.pct >= 90 ? 'good' : catStats.social.pct >= 70 ? 'warn' : 'bad');
-  addBI('Prompt Injection', catStats.injection.pct + '%', catStats.injection.pct >= 90 ? 'good' : catStats.injection.pct >= 70 ? 'warn' : 'bad');
-  addBI('False Positives', benignFP + '/' + benignTotal, benignFP === 0 ? 'good' : 'bad');
-  addBI('Avg L3 Trust (Threats)', threatAvgL3, threatAvgL3 <= 10 ? 'good' : threatAvgL3 <= 25 ? 'warn' : 'bad');
-  addBI('Avg Raw Trust (All)', avgRaw, 'neutral');
-  addBI('Avg L3 Trust (All)', avgL3, 'neutral');
+
+  addBI('Composite', compositeScore || '—', (compositeScore || 0) >= 90 ? 'good' : (compositeScore || 0) >= 70 ? 'warn' : 'bad');
+  addBI('CoV', covScore !== null ? covScore : '—', (covScore || 0) >= 90 ? 'good' : (covScore || 0) >= 70 ? 'warn' : 'bad');
+  addBI('Expert', expertScore !== null ? expertScore : '—', (expertScore || 0) >= 90 ? 'good' : (expertScore || 0) >= 70 ? 'warn' : 'bad');
+  addBI('Threats Caught', caughtThreats + '/' + totalThreats, missedThreats === 0 ? 'good' : missedThreats <= 3 ? 'warn' : 'bad');
+  addBI('False Positives', falsePos + '/' + totalSafe, falsePos === 0 ? 'good' : 'bad');
+  addBI('Divergence', divergenceRate + '%', divergenceRate <= 30 ? 'good' : divergenceRate <= 60 ? 'warn' : 'bad');
+  addBI('Red Misses', redMisses, redMisses === 0 ? 'good' : redMisses <= 3 ? 'warn' : 'bad');
+  addBI('Range Penalties', rangePenalties + '/37', rangePenalties <= 10 ? 'good' : rangePenalties <= 25 ? 'warn' : 'bad');
+  addBI('Avg Threat Trust', threatCovTrust.toFixed(1), threatCovTrust <= 15 ? 'good' : threatCovTrust <= 30 ? 'warn' : 'bad');
+
   html += '</div>';
 
-  // Hardest tests detail
-  const hardList = hardest.filter(t => t.l3Calculated > 30);
-  if (hardList.length > 0) {
+  // Hardest tests
+  const hardest = threatTests.filter(m => m.cov && m.cov.v > 30).sort((a, b) => (b.cov ? b.cov.v : 0) - (a.cov ? a.cov.v : 0)).slice(0, 3);
+  if (hardest.length > 0) {
     html += '<div style="margin-top:1rem;">';
-    html += '<div style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:0.3rem;">Toughest tests for this model:</div>';
-    hardList.forEach(t => {
-      const badge = t.l3Calculated > 50 ? 'miss' : 'warn';
+    html += '<div style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:0.3rem;">Most challenging threats for this model:</div>';
+    hardest.forEach(m => {
       html += '<div style="display:flex;justify-content:space-between;padding:0.3rem 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.82rem;">';
-      html += '<span style="color:var(--text-primary);">' + escapeHTML(t.email) + '</span>';
-      html += '<span class="badge badge-' + badge + '">L3: ' + t.l3Calculated + '</span>';
+      html += '<span style="color:var(--text-primary);">' + escapeHTML(m.label) + '</span>';
+      html += '<span class="badge badge-miss">CoV: ' + (m.cov ? m.cov.v : '?') + (m.expert ? ' / Exp: ' + m.expert.v : '') + '</span>';
       html += '</div>';
     });
     html += '</div>';

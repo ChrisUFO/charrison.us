@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Email Security Benchmark — Full Results (99 Models)</title>
+  <title>Email Security Benchmark v8.5 — Full Results (100 Models)</title>
   <link rel="stylesheet" href="clufo.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <meta name="description" content="Full results of the Email Security Benchmark v8: 97 LLMs tested across 38 email security scenarios with penalty scoring for red misses, green false positives, and incomplete tests." />
+  <meta name="description" content="Full results of the Email Security Benchmark v8.5: 100 LLMs tested with dual-prompt scoring (CoV + Expert), 37 email security scenarios, expert panel range penalties." />
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="Email Security Benchmark — Full Results" />
-  <meta property="og:description" content="94 models, 37 tests each, expert-range penalty scoring. Red misses: 1484 total across all models." />
+  <meta property="og:title" content="Email Security Benchmark v8.5 — Full Results" />
+  <meta property="og:description" content="100 models, dual-prompt scoring (CoV + Expert), 37 tests each, expert-range penalty with divergence." />
   <style>
     .results-header {
       text-align: center;
@@ -145,7 +145,7 @@
     .table-wrap {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 0 1rem 3rem;
+      padding: 0 1rem 1rem;
       overflow-x: auto;
     }
     table {
@@ -211,7 +211,6 @@
       font-weight: 400;
     }
     .tier-free { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
-
     .tier-budget { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
     .tier-mid { background: rgba(192, 132, 252, 0.15); color: #c084fc; }
     .tier-premium { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
@@ -232,6 +231,71 @@
       color: var(--text-secondary);
       font-size: 0.9rem;
     }
+
+    /* Methodology section */
+    .methodology-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1rem 3rem;
+    }
+    details {
+      background: var(--bg-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+    }
+    details summary {
+      padding: 1rem 1.2rem;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    details summary::before {
+      content: '▸';
+      color: var(--accent-primary);
+      transition: transform 0.2s;
+    }
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+    details summary:hover { color: var(--accent-primary); }
+    details > div {
+      padding: 0 1.2rem 1.2rem;
+    }
+    details h3 {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      color: var(--accent-secondary);
+      margin: 1rem 0 0.5rem;
+    }
+    details p {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      margin: 0.4rem 0;
+    }
+    details ul {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      line-height: 1.7;
+      margin: 0.4rem 0;
+      padding-left: 1.2rem;
+    }
+    details ul li { margin: 0.2rem 0; }
+    details ul li strong { color: var(--text-primary); }
+    details code {
+      background: rgba(129, 140, 248, 0.1);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      color: var(--accent-primary);
+    }
+
     @media (max-width: 600px) {
       .meta-cards { grid-template-columns: repeat(2, 1fr); }
       .filters { flex-direction: column; align-items: stretch; }
@@ -246,30 +310,30 @@
 <body>
 
   <div class="results-header">
-    <h1>🛸 Email Security Benchmark — Full Results</h1>
-    <p class="subtitle">94 LLM variants &middot; 37 email security tests &middot; v8.5 expert-range scoring &middot; April 2026</p>
+    <h1>🛸 Email Security Benchmark v8.5</h1>
+    <p class="subtitle">100 LLM variants &middot; 37 email security tests &middot; dual-prompt scoring (CoV + Expert) &middot; April 2026</p>
   </div>
 
   <div class="meta-cards">
     <div class="meta-card">
-      <div class="number">94</div>
+      <div class="number">100</div>
       <div class="label">Models Tested</div>
     </div>
     <div class="meta-card">
-      <div class="number">32</div>
-      <div class="label">Zero Misses</div>
+      <div class="number">6</div>
+      <div class="label">Perfect Score (100)</div>
     </div>
     <div class="meta-card">
-      <div class="number">31/44</div>
-      <div class="label">No-Think Wins</div>
+      <div class="number">10</div>
+      <div class="label">Zero Red Misses</div>
     </div>
     <div class="meta-card">
-      <div class="number">$13</div>
+      <div class="number">$24.79</div>
       <div class="label">Total API Cost</div>
     </div>
     <div class="meta-card">
-      <div class="number">$0.01</div>
-      <div class="label">Cheapest Zero-Miss</div>
+      <div class="number">$0.97</div>
+      <div class="label">Cheapest Zero-Miss (per M out)</div>
     </div>
   </div>
 
@@ -280,14 +344,14 @@
       <input type="text" id="search" placeholder="Search models..." autocomplete="off" />
     </div>
     <div class="filter-pills" id="pills"></div>
-    <span class="result-count" id="result-count">Showing 94</span>
+    <span class="result-count" id="result-count">Showing 100</span>
   </div>
 
   <div class="legend">
-    <span>✓ = no-think</span>
-    <span class="warn">⚠️ = unreliable</span>
-    <span class="miss-label">Red row = has misses</span>
+    <span>✓ = no-think variant</span>
+    <span class="miss-label">Red row = has red misses</span>
     <span>Click headers to sort</span>
+    <span>Click a model for per-test detail</span>
   </div>
 
   <div class="nav-links">
@@ -302,20 +366,64 @@
         <tr>
           <th data-col="0"># <span class="sort-arrow">▲</span></th>
           <th data-col="1">Model <span class="sort-arrow">▲</span></th>
-          <th data-col="2">Score <span class="sort-arrow">▲</span></th>
-          <th data-col="3">🔴 RM <span class="sort-arrow">▲</span></th>
-          <th data-col="4">🟡 GFP <span class="sort-arrow">▲</span></th>
-          <th data-col="5">Misses <span class="sort-arrow">▲</span></th>
-          <th data-col="6">Avg Trust <span class="sort-arrow">▲</span></th>
-          <th data-col="7">Valid <span class="sort-arrow">▲</span></th>
-          <th data-col="8">Time <span class="sort-arrow">▲</span></th>
-          <th data-col="9">Cost <span class="sort-arrow">▲</span></th>
+          <th data-col="2">Composite <span class="sort-arrow">▲</span></th>
+          <th data-col="3">CoV <span class="sort-arrow">▲</span></th>
+          <th data-col="4">Expert <span class="sort-arrow">▲</span></th>
+          <th data-col="5">Divergence <span class="sort-arrow">▲</span></th>
+          <th data-col="6">🔴 Red Miss <span class="sort-arrow">▲</span></th>
+          <th data-col="7">🟢 Green FP <span class="sort-arrow">▲</span></th>
+          <th data-col="8">Range Pen <span class="sort-arrow">▲</span></th>
         </tr>
       </thead>
       <tbody></tbody>
     </table>
     <div class="no-results" id="no-results" style="display:none;">No models match your filters.</div>
-    <p class="footnote" style="color: var(--text-secondary, #94a3b8); font-size: 0.8rem; margin-top: 1rem; padding-left: 1rem;">Scores use v8 penalty scoring: redMiss (dangerous miss) = −3pts, greenFP (false alarm) = −2pts, incomplete = −2pts. Raw scores (without penalties) shown where different. Zero-scored models hit −51pts or more from penalties alone.</p>
+  </div>
+
+  <!-- Methodology Section -->
+  <div class="methodology-wrap">
+    <details>
+      <summary><strong>📊 Methodology</strong></summary>
+      <div>
+
+        <p><strong>Benchmark v8.5</strong> evaluates how well LLMs can detect malicious email content using a dual-prompt approach.</p>
+
+        <h3>Two Prompt Methods</h3>
+        <p>Each model is tested twice on 37 email scenarios:</p>
+        <ul>
+          <li><strong>CoV (Chain-of-Verification):</strong> A detailed prompt with few-shot examples asking the model to analyze email content, identify threats, and assign a trust score (0–100).</li>
+          <li><strong>Expert:</strong> A simplified prompt with no scaffolding — just the raw email and a request for a trust score. This measures the model's raw security instinct.</li>
+        </ul>
+
+        <h3>Expert Panel Ranges</h3>
+        <p>An 11-model expert panel (Claude Opus 4.7, Claude Opus 4.6, Claude Sonnet 4.6, GPT-5.5, GPT-5.4, Gemini 3.1 Pro, GLM-5.1, Grok 4.20, DeepSeek V4 Pro, Kimi K2.6, Qwen3.6 Plus) scores each test email using the Expert prompt. The top and bottom scores are trimmed, and a mean ± standard deviation range is calculated from the remaining 9 models.</p>
+
+        <h3>Scoring</h3>
+        <p><strong>Base score:</strong> 100 per method per model.</p>
+        <ul>
+          <li><strong>Red miss</strong> (threat classified as safe): −2.5 points</li>
+          <li><strong>Green FP</strong> (safe classified as threat): −1.5 points</li>
+          <li><strong>Range penalty:</strong> If a model's trust score falls outside the expert panel's expected range, penalty = ln(|score − nearest boundary|). Inside range = 0.</li>
+        </ul>
+
+        <h3>Composite Score</h3>
+        <p>Combines CoV and Expert grades with a divergence penalty:</p>
+        <p><code>composite = ((CoV + Expert) / 2) − 2 × ln(max(1, |CoV − Expert|))</code></p>
+        <p>Perfect agreement (CoV = Expert) = no penalty. Larger disagreement adds a sub-linear penalty (~9 points max).</p>
+
+        <h3>Columns Explained</h3>
+        <ul>
+          <li><strong>Composite:</strong> Primary ranking. Balances raw performance with consistency between methods.</li>
+          <li><strong>CoV:</strong> Score from the detailed Chain-of-Verification prompt.</li>
+          <li><strong>Expert:</strong> Score from the simplified prompt.</li>
+          <li><strong>Divergence:</strong> Percentage of tests where the two methods disagreed.</li>
+          <li><strong>Red Miss:</strong> Threat emails the model incorrectly classified as safe.</li>
+          <li><strong>Green FP:</strong> Safe emails the model incorrectly flagged as threats.</li>
+          <li><strong>Range Pen:</strong> How often the model's score fell outside the expert panel's expected range.</li>
+        </ul>
+
+      </div>
+    </details>
   </div>
 
   <div class="nav-links" style="padding-bottom:3rem;">
@@ -326,7 +434,8 @@
 
 <script>
 (function() {
-  const allData = [{"model":"Claude Opus 4.7","score":91.8,"rawScore":100,"misses":8,"redMisses":8,"greenFP":0,"avgTrust":45.6,"valid":"37/37","totalTime":0,"costRecalc":0.0266,"totalCost":0.9858,"costRecalcTotal":0.9858,"priceIn":5,"priceOut":25,"penaltyPoints":8.2,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Claude Opus 4.6 (no think)","score":83.95,"rawScore":100,"misses":12,"redMisses":11,"greenFP":1,"avgTrust":46,"valid":"37/37","totalTime":0,"costRecalc":0.0285,"totalCost":1.054,"costRecalcTotal":1.054,"priceIn":5,"priceOut":25,"penaltyPoints":16.05,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GLM-5.1 (no think)","score":79.59,"rawScore":100,"misses":15,"redMisses":9,"greenFP":6,"avgTrust":49.9,"valid":"37/37","totalTime":0,"costRecalc":0.0098,"totalCost":0.363,"costRecalcTotal":0.363,"priceIn":1.05,"priceOut":3.5,"penaltyPoints":20.41,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Claude Sonnet 4.6","score":79.54,"rawScore":100.01,"misses":19,"redMisses":15,"greenFP":4,"avgTrust":46.5,"valid":"37/37","totalTime":0,"costRecalc":0.0527,"totalCost":1.9488,"costRecalcTotal":1.9488,"priceIn":3,"priceOut":15,"penaltyPoints":20.47,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Claude Opus 4.6","score":79.17,"rawScore":100.01,"misses":16,"redMisses":13,"greenFP":3,"avgTrust":47.1,"valid":"37/37","totalTime":0,"costRecalc":0.0504,"totalCost":1.8657,"costRecalcTotal":1.8657,"priceIn":5,"priceOut":25,"penaltyPoints":20.84,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Kimi K2.5","score":78.71,"rawScore":100,"misses":16,"redMisses":8,"greenFP":8,"avgTrust":48.4,"valid":"37/37","totalTime":0,"costRecalc":0.0097,"totalCost":0.3572,"costRecalcTotal":0.3572,"priceIn":0.44,"priceOut":2,"penaltyPoints":21.29,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GLM-5.1","score":72.64,"rawScore":100,"misses":19,"redMisses":12,"greenFP":7,"avgTrust":49.7,"valid":"37/37","totalTime":0,"costRecalc":0.0097,"totalCost":0.3579,"costRecalcTotal":0.3579,"priceIn":1.05,"priceOut":3.5,"penaltyPoints":27.36,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Claude Sonnet 4.6 (no think)","score":72.09,"rawScore":100,"misses":20,"redMisses":13,"greenFP":7,"avgTrust":47.2,"valid":"37/37","totalTime":0,"costRecalc":0.0219,"totalCost":0.809,"costRecalcTotal":0.809,"priceIn":3,"priceOut":15,"penaltyPoints":27.91,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GPT-5.5","score":71.78,"rawScore":100,"misses":26,"redMisses":14,"greenFP":12,"avgTrust":51.3,"valid":"37/37","totalTime":505,"costRecalc":0.0097,"totalCost":0.3581,"costRecalcTotal":0.3581,"priceIn":5,"priceOut":30,"penaltyPoints":28.22,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Gemini 3.1 Pro","score":67.81,"rawScore":100,"misses":26,"redMisses":15,"greenFP":11,"avgTrust":53,"valid":"37/37","totalTime":0,"costRecalc":0.0114,"totalCost":0.4209,"costRecalcTotal":0.4209,"priceIn":2,"priceOut":12,"penaltyPoints":32.19,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Qwen3.5 Flash","score":67.32,"rawScore":100,"misses":23,"redMisses":15,"greenFP":8,"avgTrust":52.3,"valid":"37/37","totalTime":0,"costRecalc":0.0074,"totalCost":0.2746,"costRecalcTotal":0.2746,"priceIn":0.065,"priceOut":0.26,"penaltyPoints":32.68,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Kimi K2.5 (no think)","score":67.24,"rawScore":100,"misses":23,"redMisses":12,"greenFP":11,"avgTrust":52.6,"valid":"37/37","totalTime":0,"costRecalc":0.0095,"totalCost":0.3527,"costRecalcTotal":0.3527,"priceIn":0.44,"priceOut":2,"penaltyPoints":32.76,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Kimi K2.6 (no think)","score":66.72,"rawScore":100,"misses":25,"redMisses":13,"greenFP":12,"avgTrust":54.1,"valid":"37/37","totalTime":0,"costRecalc":0.0157,"totalCost":0.5801,"costRecalcTotal":0.5801,"priceIn":0.7448,"priceOut":4.655,"penaltyPoints":33.28,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Qwen3.6 Plus","score":65.92,"rawScore":100,"misses":26,"redMisses":15,"greenFP":11,"avgTrust":56.4,"valid":"37/37","totalTime":0,"costRecalc":0.0051,"totalCost":0.1902,"costRecalcTotal":0.1902,"priceIn":0.325,"priceOut":1.95,"penaltyPoints":34.08,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GPT-5.5 (no think)","score":65.87,"rawScore":100,"misses":27,"redMisses":15,"greenFP":12,"avgTrust":52.3,"valid":"37/37","totalTime":542,"costRecalc":0.0101,"totalCost":0.373,"costRecalcTotal":0.373,"priceIn":5,"priceOut":30,"penaltyPoints":34.13,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Grok 4.1 Fast","score":65.02,"rawScore":100,"misses":23,"redMisses":13,"greenFP":10,"avgTrust":53.4,"valid":"37/37","totalTime":701,"costRecalc":0.0015,"totalCost":0.055,"costRecalcTotal":0.055,"priceIn":0.2,"priceOut":0.5,"penaltyPoints":34.98,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Qwen3.6 Plus (medium think)","score":65.01,"rawScore":100,"misses":25,"redMisses":17,"greenFP":8,"avgTrust":55,"valid":"37/37","totalTime":0,"costRecalc":0.0053,"totalCost":0.1953,"costRecalcTotal":0.1953,"priceIn":0.325,"priceOut":1.95,"penaltyPoints":34.99,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GLM-4.7 (no think)","score":63.96,"rawScore":100,"misses":22,"redMisses":13,"greenFP":9,"avgTrust":54.7,"valid":"37/37","totalTime":0,"costRecalc":0.0048,"totalCost":0.1765,"costRecalcTotal":0.1765,"priceIn":0.38,"priceOut":1.74,"penaltyPoints":36.04,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Qwen3.6 Plus (no think)","score":63.8,"rawScore":100,"misses":27,"redMisses":16,"greenFP":11,"avgTrust":55.5,"valid":"37/37","totalTime":0,"costRecalc":0.0051,"totalCost":0.1891,"costRecalcTotal":0.1891,"priceIn":0.325,"priceOut":1.95,"penaltyPoints":36.2,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Gemini 3.1 Pro (no think)","score":62.85,"rawScore":100,"misses":26,"redMisses":16,"greenFP":10,"avgTrust":53.5,"valid":"37/37","totalTime":0,"costRecalc":0.0171,"totalCost":0.631,"costRecalcTotal":0.631,"priceIn":2,"priceOut":12,"penaltyPoints":37.15,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Gemini 3.1 Flash Lite (high think)","score":62.58,"rawScore":100,"misses":21,"redMisses":15,"greenFP":6,"avgTrust":53.5,"valid":"37/37","totalTime":0,"costRecalc":0.0283,"totalCost":1.0466,"costRecalcTotal":1.0466,"priceIn":0.25,"priceOut":1.5,"penaltyPoints":37.42,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Qwen3.5 Flash (medium think)","score":62.24,"rawScore":100,"misses":28,"redMisses":16,"greenFP":12,"avgTrust":51.4,"valid":"37/37","totalTime":0,"costRecalc":0.0048,"totalCost":0.1788,"costRecalcTotal":0.1788,"priceIn":0.065,"priceOut":0.26,"penaltyPoints":37.76,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Gemini 3.1 Flash Lite","score":61.99,"rawScore":100,"misses":22,"redMisses":18,"greenFP":4,"avgTrust":53.9,"valid":"37/37","totalTime":0,"costRecalc":0.0019,"totalCost":0.0688,"costRecalcTotal":0.0688,"priceIn":0.25,"priceOut":1.5,"penaltyPoints":38.01,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Grok 4.20","score":61.76,"rawScore":100,"misses":21,"redMisses":15,"greenFP":6,"avgTrust":54.3,"valid":"37/37","totalTime":2403,"costRecalc":0.0288,"totalCost":1.0674,"costRecalcTotal":1.0674,"priceIn":2,"priceOut":6,"penaltyPoints":38.24,"incompleteMisses":0,"l3AvgTrust":0},{"model":"DeepSeek V4 Flash","score":61.72,"rawScore":100,"misses":27,"redMisses":18,"greenFP":9,"avgTrust":53.6,"valid":"37/37","totalTime":0,"costRecalc":0.0005,"totalCost":0.02,"costRecalcTotal":0.02,"priceIn":0.14,"priceOut":0.28,"penaltyPoints":38.28,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Gemma 4 26B (xhigh think)","score":61.57,"rawScore":100,"misses":27,"redMisses":16,"greenFP":11,"avgTrust":54.6,"valid":"37/37","totalTime":3259,"costRecalc":0.0012,"totalCost":0.0448,"costRecalcTotal":0.0448,"priceIn":0.06,"priceOut":0.33,"penaltyPoints":38.43,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Kimi K2.6","score":61.07,"rawScore":100,"misses":25,"redMisses":13,"greenFP":12,"avgTrust":53.4,"valid":"37/37","totalTime":0,"costRecalc":0.0152,"totalCost":0.5621,"costRecalcTotal":0.5621,"priceIn":0.7448,"priceOut":4.655,"penaltyPoints":38.93,"incompleteMisses":0,"l3AvgTrust":0},{"model":"DeepSeek V4 Pro","score":60.83,"rawScore":100,"misses":25,"redMisses":15,"greenFP":10,"avgTrust":52.2,"valid":"37/37","totalTime":3829,"costRecalc":0.0214,"totalCost":0.7934,"costRecalcTotal":0.7934,"priceIn":0.435,"priceOut":0.87,"penaltyPoints":39.17,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Qwen3.5 Flash (high think)","score":60.49,"rawScore":100,"misses":24,"redMisses":16,"greenFP":8,"avgTrust":55,"valid":"37/37","totalTime":0,"costRecalc":0.0051,"totalCost":0.1891,"costRecalcTotal":0.1891,"priceIn":0.065,"priceOut":0.26,"penaltyPoints":39.51,"incompleteMisses":0,"l3AvgTrust":0},{"model":"DeepSeek V4 Pro (no think)","score":60.48,"rawScore":100,"misses":25,"redMisses":16,"greenFP":9,"avgTrust":51.4,"valid":"37/37","totalTime":0,"costRecalc":0.004,"totalCost":0.1486,"costRecalcTotal":0.1486,"priceIn":0.435,"priceOut":0.87,"penaltyPoints":39.52,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Gemma 4 26B (high think)","score":60.17,"rawScore":100,"misses":28,"redMisses":16,"greenFP":12,"avgTrust":55.8,"valid":"37/37","totalTime":0,"costRecalc":0.001,"totalCost":0.0387,"costRecalcTotal":0.0387,"priceIn":0.06,"priceOut":0.33,"penaltyPoints":39.83,"incompleteMisses":0,"l3AvgTrust":0},{"model":"MiMo 2.5 Pro (no think)","score":59.84,"rawScore":100,"misses":24,"redMisses":15,"greenFP":9,"avgTrust":55.1,"valid":"37/37","totalTime":0,"costRecalc":0.0032,"totalCost":0.1197,"costRecalcTotal":0.1197,"priceIn":1,"priceOut":3,"penaltyPoints":40.16,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Gemini 3.1 Flash Lite (xhigh think)","score":59.74,"rawScore":100,"misses":26,"redMisses":16,"greenFP":10,"avgTrust":56.8,"valid":"37/37","totalTime":628,"costRecalc":0.0108,"totalCost":0.3995,"costRecalcTotal":0.3995,"priceIn":0.25,"priceOut":1.5,"penaltyPoints":40.26,"incompleteMisses":0,"l3AvgTrust":0},{"model":"MiMo 2.5","score":59.71,"rawScore":100,"misses":25,"redMisses":16,"greenFP":9,"avgTrust":53.8,"valid":"37/37","totalTime":0,"costRecalc":0.0032,"totalCost":0.1198,"costRecalcTotal":0.1198,"priceIn":0.4,"priceOut":2,"penaltyPoints":40.29,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GLM-5 (no think)","score":58.98,"rawScore":100,"misses":25,"redMisses":16,"greenFP":9,"avgTrust":54.5,"valid":"37/37","totalTime":0,"costRecalc":0.0022,"totalCost":0.0826,"costRecalcTotal":0.0826,"priceIn":0.6,"priceOut":2.08,"penaltyPoints":41.02,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Gemma 4 26B (medium think)","score":58.84,"rawScore":100,"misses":29,"redMisses":15,"greenFP":14,"avgTrust":56.4,"valid":"37/37","totalTime":0,"costRecalc":0.001,"totalCost":0.0368,"costRecalcTotal":0.0368,"priceIn":0.06,"priceOut":0.33,"penaltyPoints":41.16,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Gemma 4 31B","score":58.31,"rawScore":100,"misses":26,"redMisses":16,"greenFP":10,"avgTrust":54.9,"valid":"37/37","totalTime":0,"costRecalc":0,"totalCost":0,"costRecalcTotal":0,"priceIn":0.13,"priceOut":0.38,"penaltyPoints":41.69,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Gemma 4 26B","score":58,"rawScore":100,"misses":30,"redMisses":18,"greenFP":12,"avgTrust":56.9,"valid":"37/37","totalTime":0,"costRecalc":0.0001,"totalCost":0.0048,"costRecalcTotal":0.0048,"priceIn":0.06,"priceOut":0.33,"penaltyPoints":42,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Grok 4.20  (no think)","score":57.88,"rawScore":100,"misses":24,"redMisses":15,"greenFP":9,"avgTrust":45.4,"valid":"37/37","totalTime":0,"costRecalc":0.0057,"totalCost":0.2115,"costRecalcTotal":0.2115,"priceIn":2,"priceOut":6,"penaltyPoints":42.12,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Qwen3.5 Flash (no think)","score":57.74,"rawScore":100,"misses":29,"redMisses":18,"greenFP":11,"avgTrust":54.7,"valid":"37/37","totalTime":0,"costRecalc":0.0057,"totalCost":0.2118,"costRecalcTotal":0.2118,"priceIn":0.065,"priceOut":0.26,"penaltyPoints":42.26,"incompleteMisses":0,"l3AvgTrust":0},{"model":"MiMo V2 Pro","score":57.72,"rawScore":100,"misses":27,"redMisses":15,"greenFP":12,"avgTrust":55.3,"valid":"37/37","totalTime":306,"costRecalc":0.0032,"totalCost":0.1199,"costRecalcTotal":0.1199,"priceIn":1,"priceOut":3,"penaltyPoints":42.28,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Gemma 4 31B (high think)","score":57.49,"rawScore":100,"misses":26,"redMisses":16,"greenFP":10,"avgTrust":55.9,"valid":"37/37","totalTime":0,"costRecalc":0.0006,"totalCost":0.0214,"costRecalcTotal":0.0214,"priceIn":0.13,"priceOut":0.38,"penaltyPoints":42.51,"incompleteMisses":0,"l3AvgTrust":0},{"model":"MiMo 2.5 Pro","score":56.34,"rawScore":100,"misses":23,"redMisses":14,"greenFP":9,"avgTrust":56.1,"valid":"37/37","totalTime":0,"costRecalc":0.0056,"totalCost":0.2056,"costRecalcTotal":0.2056,"priceIn":1,"priceOut":3,"penaltyPoints":43.66,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Gemini 3 Flash","score":56.12,"rawScore":100,"misses":24,"redMisses":16,"greenFP":8,"avgTrust":55.5,"valid":"37/37","totalTime":0,"costRecalc":0.0063,"totalCost":0.2325,"costRecalcTotal":0.2325,"priceIn":0.5,"priceOut":3,"penaltyPoints":43.88,"incompleteMisses":0,"l3AvgTrust":0},{"model":"MiMo 2.5 (no think)","score":55.5,"rawScore":100,"misses":24,"redMisses":15,"greenFP":9,"avgTrust":53.9,"valid":"37/37","totalTime":0,"costRecalc":0.0017,"totalCost":0.0613,"costRecalcTotal":0.0613,"priceIn":0.4,"priceOut":2,"penaltyPoints":44.5,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GLM-5 Turbo (no think)","score":55.45,"rawScore":100,"misses":25,"redMisses":16,"greenFP":9,"avgTrust":55.3,"valid":"37/37","totalTime":0,"costRecalc":0.0077,"totalCost":0.2862,"costRecalcTotal":0.2862,"priceIn":1.2,"priceOut":4,"penaltyPoints":44.55,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GLM-4.6","score":55.14,"rawScore":100,"misses":24,"redMisses":12,"greenFP":12,"avgTrust":53.5,"valid":"37/37","totalTime":0,"costRecalc":0.0065,"totalCost":0.2407,"costRecalcTotal":0.2407,"priceIn":0.39,"priceOut":1.9,"penaltyPoints":44.86,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GLM-4.7","score":55.06,"rawScore":100,"misses":27,"redMisses":14,"greenFP":13,"avgTrust":62.6,"valid":"37/37","totalTime":0,"costRecalc":0.0045,"totalCost":0.1682,"costRecalcTotal":0.1682,"priceIn":0.38,"priceOut":1.74,"penaltyPoints":44.94,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Grok 4.1 Fast (no think)","score":54.99,"rawScore":100,"misses":27,"redMisses":15,"greenFP":12,"avgTrust":55,"valid":"37/37","totalTime":740,"costRecalc":0.0015,"totalCost":0.0545,"costRecalcTotal":0.0545,"priceIn":0.2,"priceOut":0.5,"penaltyPoints":45.01,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Gemini 3.1 Flash Lite (medium think)","score":54.84,"rawScore":100,"misses":25,"redMisses":17,"greenFP":8,"avgTrust":55.1,"valid":"37/37","totalTime":0,"costRecalc":0.0019,"totalCost":0.0691,"costRecalcTotal":0.0691,"priceIn":0.25,"priceOut":1.5,"penaltyPoints":45.16,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Gemma 4 31B (medium think)","score":54.55,"rawScore":100,"misses":26,"redMisses":16,"greenFP":10,"avgTrust":57.6,"valid":"37/37","totalTime":0,"costRecalc":0.0006,"totalCost":0.0219,"costRecalcTotal":0.0219,"priceIn":0.13,"priceOut":0.38,"penaltyPoints":45.45,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Gemma 4 26B (no think)","score":54.46,"rawScore":100,"misses":28,"redMisses":19,"greenFP":9,"avgTrust":55,"valid":"37/37","totalTime":0,"costRecalc":0.0002,"totalCost":0.0088,"costRecalcTotal":0.0088,"priceIn":0.06,"priceOut":0.33,"penaltyPoints":45.54,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GPT-5.4","score":54.1,"rawScore":100,"misses":29,"redMisses":17,"greenFP":12,"avgTrust":58.4,"valid":"37/37","totalTime":0,"costRecalc":0.0252,"totalCost":0.9334,"costRecalcTotal":0.9334,"priceIn":2.5,"priceOut":15,"penaltyPoints":45.9,"incompleteMisses":0,"l3AvgTrust":0},{"model":"MiMo V2 Flash","score":54.02,"rawScore":100,"misses":22,"redMisses":17,"greenFP":5,"avgTrust":61.9,"valid":"37/37","totalTime":0,"costRecalc":0.0011,"totalCost":0.0417,"costRecalcTotal":0.0417,"priceIn":0.09,"priceOut":0.29,"penaltyPoints":45.98,"incompleteMisses":0,"l3AvgTrust":0},{"model":"DeepSeek V4 Flash (no think)","score":53.98,"rawScore":100,"misses":23,"redMisses":13,"greenFP":10,"avgTrust":50.9,"valid":"37/37","totalTime":0,"costRecalc":0.0003,"totalCost":0.012,"costRecalcTotal":0.012,"priceIn":0.14,"priceOut":0.28,"penaltyPoints":46.02,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GLM-5","score":53.71,"rawScore":100,"misses":25,"redMisses":15,"greenFP":10,"avgTrust":57.8,"valid":"37/37","totalTime":0,"costRecalc":0.0017,"totalCost":0.0647,"costRecalcTotal":0.0647,"priceIn":0.6,"priceOut":2.08,"penaltyPoints":46.29,"incompleteMisses":0,"l3AvgTrust":0},{"model":"MiniMax M2.7 (no think)","score":52.67,"rawScore":100,"misses":26,"redMisses":17,"greenFP":9,"avgTrust":57.8,"valid":"37/37","totalTime":0,"costRecalc":0.0013,"totalCost":0.0488,"costRecalcTotal":0.0488,"priceIn":0.3,"priceOut":1.2,"penaltyPoints":47.33,"incompleteMisses":0,"l3AvgTrust":0},{"model":"MiniMax M2.7","score":51.89,"rawScore":100,"misses":25,"redMisses":17,"greenFP":8,"avgTrust":55.1,"valid":"37/37","totalTime":0,"costRecalc":0.004,"totalCost":0.1468,"costRecalcTotal":0.1468,"priceIn":0.3,"priceOut":1.2,"penaltyPoints":48.11,"incompleteMisses":0,"l3AvgTrust":0},{"model":"MiniMax M2.7 (high think)","score":51.87,"rawScore":100,"misses":26,"redMisses":17,"greenFP":9,"avgTrust":60,"valid":"37/37","totalTime":0,"costRecalc":0.0027,"totalCost":0.0992,"costRecalcTotal":0.0992,"priceIn":0.3,"priceOut":1.2,"penaltyPoints":48.13,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GLM-4.6 (no think)","score":51.5,"rawScore":100,"misses":23,"redMisses":14,"greenFP":9,"avgTrust":55,"valid":"37/37","totalTime":0,"costRecalc":0.0015,"totalCost":0.0552,"costRecalcTotal":0.0552,"priceIn":0.39,"priceOut":1.9,"penaltyPoints":48.5,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Mercury 2","score":51.33,"rawScore":100,"misses":26,"redMisses":18,"greenFP":8,"avgTrust":61.1,"valid":"37/37","totalTime":0,"costRecalc":0.0011,"totalCost":0.0404,"costRecalcTotal":0.0404,"priceIn":0.25,"priceOut":0.75,"penaltyPoints":48.67,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GPT-5.4 Mini (no think)","score":50.96,"rawScore":100,"misses":27,"redMisses":16,"greenFP":11,"avgTrust":57.4,"valid":"37/37","totalTime":0,"costRecalc":0.0035,"totalCost":0.1286,"costRecalcTotal":0.1286,"priceIn":0.75,"priceOut":4.5,"penaltyPoints":49.04,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GPT-5.4 Nano","score":50.9,"rawScore":100,"misses":23,"redMisses":16,"greenFP":7,"avgTrust":62.2,"valid":"37/37","totalTime":0,"costRecalc":0.0014,"totalCost":0.0534,"costRecalcTotal":0.0534,"priceIn":0.2,"priceOut":1.25,"penaltyPoints":49.1,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GPT-5.4 Nano (high think)","score":50.9,"rawScore":100.01,"misses":24,"redMisses":17,"greenFP":7,"avgTrust":60.8,"valid":"37/37","totalTime":0,"costRecalc":0.0018,"totalCost":0.0666,"costRecalcTotal":0.0666,"priceIn":0.2,"priceOut":1.25,"penaltyPoints":49.11,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GPT-5.4 (no think)","score":50.71,"rawScore":100,"misses":32,"redMisses":18,"greenFP":14,"avgTrust":54.2,"valid":"37/37","totalTime":0,"costRecalc":0.0112,"totalCost":0.4155,"costRecalcTotal":0.4155,"priceIn":2.5,"priceOut":15,"penaltyPoints":49.29,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GLM-5 Turbo","score":50.24,"rawScore":100,"misses":27,"redMisses":17,"greenFP":10,"avgTrust":55.4,"valid":"37/37","totalTime":0,"costRecalc":0.0081,"totalCost":0.2986,"costRecalcTotal":0.2986,"priceIn":1.2,"priceOut":4,"penaltyPoints":49.76,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Gemini 3.1 Flash Lite (no think)","score":49.36,"rawScore":100,"misses":24,"redMisses":16,"greenFP":8,"avgTrust":55.5,"valid":"37/37","totalTime":0,"costRecalc":0.0009,"totalCost":0.0318,"costRecalcTotal":0.0318,"priceIn":0.25,"priceOut":1.5,"penaltyPoints":50.64,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GPT-5.4 Mini (medium think)","score":48.78,"rawScore":100,"misses":29,"redMisses":16,"greenFP":13,"avgTrust":62.1,"valid":"37/37","totalTime":0,"costRecalc":0.008,"totalCost":0.2966,"costRecalcTotal":0.2966,"priceIn":0.75,"priceOut":4.5,"penaltyPoints":51.22,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GPT-5.4 Mini","score":48.52,"rawScore":100,"misses":29,"redMisses":17,"greenFP":12,"avgTrust":61.4,"valid":"37/37","totalTime":0,"costRecalc":0.0084,"totalCost":0.3114,"costRecalcTotal":0.3114,"priceIn":0.75,"priceOut":4.5,"penaltyPoints":51.48,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GLM-4.5 (no think)","score":47.99,"rawScore":100,"misses":27,"redMisses":17,"greenFP":10,"avgTrust":56.2,"valid":"37/37","totalTime":0,"costRecalc":0.0088,"totalCost":0.3262,"costRecalcTotal":0.3262,"priceIn":0.6,"priceOut":2.2,"penaltyPoints":52.01,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Llama 4 Maverick (no think)","score":47.88,"rawScore":100,"misses":27,"redMisses":16,"greenFP":11,"avgTrust":51.6,"valid":"37/37","totalTime":141,"costRecalc":0.0004,"totalCost":0.0152,"costRecalcTotal":0.0152,"priceIn":0.15,"priceOut":0.6,"penaltyPoints":52.12,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GLM-4.5","score":47,"rawScore":100,"misses":23,"redMisses":16,"greenFP":7,"avgTrust":58.7,"valid":"37/37","totalTime":0,"costRecalc":0.0081,"totalCost":0.2982,"costRecalcTotal":0.2982,"priceIn":0.6,"priceOut":2.2,"penaltyPoints":53,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GPT-5.4 Mini (high think)","score":46.94,"rawScore":100,"misses":30,"redMisses":18,"greenFP":12,"avgTrust":60,"valid":"37/37","totalTime":0,"costRecalc":0.0199,"totalCost":0.7348,"costRecalcTotal":0.7348,"priceIn":0.75,"priceOut":4.5,"penaltyPoints":53.06,"incompleteMisses":0,"l3AvgTrust":0},{"model":"MiMo V2 Flash (no think)","score":46.83,"rawScore":100.01,"misses":24,"redMisses":17,"greenFP":7,"avgTrust":59.1,"valid":"37/37","totalTime":174,"costRecalc":0.0003,"totalCost":0.0095,"costRecalcTotal":0.0095,"priceIn":0.09,"priceOut":0.29,"penaltyPoints":53.18,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Gemini 3 Flash (no think)","score":46.57,"rawScore":100,"misses":26,"redMisses":18,"greenFP":8,"avgTrust":61.5,"valid":"37/37","totalTime":0,"costRecalc":0.0018,"totalCost":0.0657,"costRecalcTotal":0.0657,"priceIn":0.5,"priceOut":3,"penaltyPoints":53.43,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Mercury 2 (no think)","score":45.88,"rawScore":100,"misses":25,"redMisses":17,"greenFP":8,"avgTrust":65.4,"valid":"37/37","totalTime":70,"costRecalc":0.0012,"totalCost":0.0434,"costRecalcTotal":0.0434,"priceIn":0.25,"priceOut":0.75,"penaltyPoints":54.12,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Step 3.5 Flash (no think)","score":43.47,"rawScore":100,"misses":27,"redMisses":18,"greenFP":9,"avgTrust":61.4,"valid":"37/37","totalTime":2620,"costRecalc":0.0025,"totalCost":0.0936,"costRecalcTotal":0.0936,"priceIn":0.1,"priceOut":0.3,"penaltyPoints":56.53,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GPT-OSS 20B (no think)","score":42.72,"rawScore":100,"misses":25,"redMisses":17,"greenFP":8,"avgTrust":65.9,"valid":"37/37","totalTime":0,"costRecalc":0.0002,"totalCost":0.0074,"costRecalcTotal":0.0074,"priceIn":0.03,"priceOut":0.14,"penaltyPoints":57.28,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Ling 2.6 Flash","score":41.17,"rawScore":100,"misses":28,"redMisses":18,"greenFP":10,"avgTrust":52.7,"valid":"37/37","totalTime":0,"costRecalc":0,"totalCost":0,"costRecalcTotal":0,"priceIn":0,"priceOut":0,"penaltyPoints":58.83,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Seed 2.0 Mini (no think)","score":38.78,"rawScore":100,"misses":28,"redMisses":17,"greenFP":11,"avgTrust":68.1,"valid":"37/37","totalTime":6395,"costRecalc":0.0027,"totalCost":0.1005,"costRecalcTotal":0.1005,"priceIn":0.1,"priceOut":0.4,"penaltyPoints":61.22,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Gemma 4 31B (no think)","score":36.49,"rawScore":100,"misses":32,"redMisses":18,"greenFP":14,"avgTrust":60.8,"valid":"37/37","totalTime":0,"costRecalc":0,"totalCost":0.0003,"costRecalcTotal":0.0003,"priceIn":0.13,"priceOut":0.38,"penaltyPoints":63.51,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Phi 4 (no think)","score":35.03,"rawScore":100,"misses":30,"redMisses":18,"greenFP":12,"avgTrust":61.8,"valid":"37/37","totalTime":207,"costRecalc":0.0001,"totalCost":0.0051,"costRecalcTotal":0.0051,"priceIn":0.065,"priceOut":0.14,"penaltyPoints":64.97,"incompleteMisses":0,"l3AvgTrust":0},{"model":"DeepSeek Chat (no think)","score":35.03,"rawScore":100,"misses":28,"redMisses":17,"greenFP":11,"avgTrust":65.4,"valid":"37/37","totalTime":0,"costRecalc":0.0007,"totalCost":0.0268,"costRecalcTotal":0.0268,"priceIn":0.32,"priceOut":0.89,"penaltyPoints":64.97,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Ling 2.6 Flash (no think)","score":34.26,"rawScore":100,"misses":30,"redMisses":18,"greenFP":12,"avgTrust":54.7,"valid":"37/37","totalTime":0,"costRecalc":0,"totalCost":0,"costRecalcTotal":0,"priceIn":0,"priceOut":0,"penaltyPoints":65.74,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GPT-OSS 20B","score":33.83,"rawScore":100,"misses":30,"redMisses":19,"greenFP":11,"avgTrust":68.1,"valid":"37/37","totalTime":195,"costRecalc":0.0002,"totalCost":0.0076,"costRecalcTotal":0.0076,"priceIn":0.03,"priceOut":0.14,"penaltyPoints":66.17,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Seed 2.0 Mini (high think)","score":33.65,"rawScore":100.01,"misses":31,"redMisses":17,"greenFP":14,"avgTrust":73.1,"valid":"37/37","totalTime":0,"costRecalc":0.0039,"totalCost":0.1445,"costRecalcTotal":0.1445,"priceIn":0.1,"priceOut":0.4,"penaltyPoints":66.36,"incompleteMisses":0,"l3AvgTrust":0},{"model":"GPT-5.4 Nano (no think)","score":33.37,"rawScore":100,"misses":27,"redMisses":18,"greenFP":9,"avgTrust":58.5,"valid":"37/37","totalTime":0,"costRecalc":0.0009,"totalCost":0.0318,"costRecalcTotal":0.0318,"priceIn":0.2,"priceOut":1.25,"penaltyPoints":66.63,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Phi 4","score":32.76,"rawScore":100,"misses":32,"redMisses":18,"greenFP":14,"avgTrust":62,"valid":"37/37","totalTime":0,"costRecalc":0.0001,"totalCost":0.005,"costRecalcTotal":0.005,"priceIn":0.065,"priceOut":0.14,"penaltyPoints":67.24,"incompleteMisses":0,"l3AvgTrust":0},{"model":"DeepSeek Chat","score":32.01,"rawScore":100,"misses":28,"redMisses":17,"greenFP":11,"avgTrust":65.3,"valid":"37/37","totalTime":0,"costRecalc":0.0007,"totalCost":0.0266,"costRecalcTotal":0.0266,"priceIn":0.32,"priceOut":0.89,"penaltyPoints":67.99,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Seed 2.0 Mini","score":30.46,"rawScore":100,"misses":31,"redMisses":18,"greenFP":13,"avgTrust":73.6,"valid":"37/37","totalTime":0,"costRecalc":0.0026,"totalCost":0.0976,"costRecalcTotal":0.0976,"priceIn":0.1,"priceOut":0.4,"penaltyPoints":69.54,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Trinity Mini","score":29.83,"rawScore":100.01,"misses":27,"redMisses":18,"greenFP":9,"avgTrust":70.5,"valid":"37/37","totalTime":294,"costRecalc":0.0003,"totalCost":0.0098,"costRecalcTotal":0.0098,"priceIn":0.045,"priceOut":0.15,"penaltyPoints":70.18,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Trinity Mini (no think)","score":29.55,"rawScore":100,"misses":28,"redMisses":18,"greenFP":10,"avgTrust":63.1,"valid":"37/37","totalTime":317,"costRecalc":0.0003,"totalCost":0.0103,"costRecalcTotal":0.0103,"priceIn":0.045,"priceOut":0.15,"penaltyPoints":70.45,"incompleteMisses":0,"l3AvgTrust":0},{"model":"Seed 2.0 Mini (medium think)","score":29.23,"rawScore":100,"misses":33,"redMisses":18,"greenFP":15,"avgTrust":73.3,"valid":"37/37","totalTime":0,"costRecalc":0.0025,"totalCost":0.094,"costRecalcTotal":0.094,"priceIn":0.1,"priceOut":0.4,"penaltyPoints":70.77,"incompleteMisses":0,"l3AvgTrust":0},{"model":"LFM 2.5 Thinking","score":19.87,"rawScore":100,"misses":34,"redMisses":18,"greenFP":16,"avgTrust":26.5,"valid":"37/37","totalTime":0,"costRecalc":0,"totalCost":0,"costRecalcTotal":0,"priceIn":0,"priceOut":0,"penaltyPoints":80.13,"incompleteMisses":0,"l3AvgTrust":0}];;;
+  const allData = [{"model":"Qwen3.6 27B","composite_score":100,"cov_score":null,"expert_score":100,"priceIn":0.325,"priceOut":3.25,"totalCost":0.1665,"totalTime":0},{"model":"Qwen3.6 27B (high think)","composite_score":100,"cov_score":null,"expert_score":100,"priceIn":0.325,"priceOut":3.25,"totalCost":0.1715,"totalTime":0},{"model":"Qwen3.6 35B-A3B","composite_score":100,"cov_score":null,"expert_score":100,"priceIn":0.1612,"priceOut":0.9653,"totalCost":0.0985,"totalTime":0},{"model":"Qwen3.6 35B-A3B (high think)","composite_score":100,"cov_score":null,"expert_score":100,"priceIn":0.1612,"priceOut":0.9653,"totalCost":0.1009,"totalTime":0},{"model":"Qwen3.6 Max Preview","composite_score":100,"cov_score":null,"expert_score":100,"priceIn":1.04,"priceOut":6.24,"totalCost":0.3464,"totalTime":0},{"model":"Qwen3.6 Max Preview (high think)","composite_score":100,"cov_score":null,"expert_score":100,"priceIn":1.04,"priceOut":6.24,"totalCost":0.3385,"totalTime":0},{"model":"Claude Opus 4.7","composite_score":91.69,"cov_score":91.8,"expert_score":100,"priceIn":5,"priceOut":25,"totalCost":0.9858,"totalTime":0},{"model":"Claude Opus 4.6 (no think)","composite_score":86.42,"cov_score":83.95,"expert_score":100,"priceIn":5,"priceOut":25,"totalCost":1.054,"totalTime":0},{"model":"GLM-5.1 (no think)","composite_score":83.76,"cov_score":79.59,"expert_score":100,"priceIn":1.05,"priceOut":3.5,"totalCost":0.363,"totalTime":0},{"model":"Claude Sonnet 4.6","composite_score":83.73,"cov_score":79.54,"expert_score":100,"priceIn":3,"priceOut":15,"totalCost":1.9488,"totalTime":0},{"model":"Claude Opus 4.6","composite_score":83.51,"cov_score":79.17,"expert_score":100,"priceIn":5,"priceOut":25,"totalCost":1.8657,"totalTime":0},{"model":"Kimi K2.5","composite_score":83.24,"cov_score":78.71,"expert_score":100,"priceIn":0.44,"priceOut":2,"totalCost":0.3572,"totalTime":0},{"model":"GLM-5.1","composite_score":79.7,"cov_score":72.64,"expert_score":100,"priceIn":1.05,"priceOut":3.5,"totalCost":0.3579,"totalTime":0},{"model":"Claude Sonnet 4.6 (no think)","composite_score":79.39,"cov_score":72.09,"expert_score":100,"priceIn":3,"priceOut":15,"totalCost":0.809,"totalTime":0},{"model":"GPT-5.5","composite_score":79.21,"cov_score":71.78,"expert_score":100,"priceIn":5,"priceOut":30,"totalCost":0.3581,"totalTime":505},{"model":"Gemini 3.1 Pro","composite_score":76.96,"cov_score":67.81,"expert_score":100,"priceIn":2,"priceOut":12,"totalCost":0.4209,"totalTime":0},{"model":"Qwen3.5 Flash","composite_score":76.69,"cov_score":67.32,"expert_score":100,"priceIn":0.065,"priceOut":0.26,"totalCost":0.2746,"totalTime":0},{"model":"Kimi K2.5 (no think)","composite_score":76.64,"cov_score":67.24,"expert_score":100,"priceIn":0.44,"priceOut":2,"totalCost":0.3527,"totalTime":0},{"model":"Kimi K2.6 (no think)","composite_score":76.35,"cov_score":66.72,"expert_score":100,"priceIn":0.7448,"priceOut":4.655,"totalCost":0.5801,"totalTime":0},{"model":"Qwen3.6 Plus","composite_score":75.9,"cov_score":65.92,"expert_score":100,"priceIn":0.325,"priceOut":1.95,"totalCost":0.1902,"totalTime":0},{"model":"GPT-5.5 (no think)","composite_score":75.87,"cov_score":65.87,"expert_score":100,"priceIn":5,"priceOut":30,"totalCost":0.373,"totalTime":542},{"model":"Grok 4.1 Fast","composite_score":75.4,"cov_score":65.02,"expert_score":100,"priceIn":0.2,"priceOut":0.5,"totalCost":0.055,"totalTime":701},{"model":"Qwen3.6 Plus (medium think)","composite_score":75.39,"cov_score":65.01,"expert_score":100,"priceIn":0.325,"priceOut":1.95,"totalCost":0.1953,"totalTime":0},{"model":"GLM-4.7 (no think)","composite_score":74.81,"cov_score":63.96,"expert_score":100,"priceIn":0.38,"priceOut":1.74,"totalCost":0.1765,"totalTime":0},{"model":"Qwen3.6 Plus (no think)","composite_score":74.72,"cov_score":63.8,"expert_score":100,"priceIn":0.325,"priceOut":1.95,"totalCost":0.1891,"totalTime":0},{"model":"Gemini 3.1 Pro (no think)","composite_score":74.2,"cov_score":62.85,"expert_score":100,"priceIn":2,"priceOut":12,"totalCost":0.631,"totalTime":0},{"model":"Gemini 3.1 Flash Lite (high think)","composite_score":74.05,"cov_score":62.58,"expert_score":100,"priceIn":0.25,"priceOut":1.5,"totalCost":1.0466,"totalTime":0},{"model":"Qwen3.5 Flash (medium think)","composite_score":73.86,"cov_score":62.24,"expert_score":100,"priceIn":0.065,"priceOut":0.26,"totalCost":0.1788,"totalTime":0},{"model":"Gemini 3.1 Flash Lite","composite_score":73.72,"cov_score":61.99,"expert_score":100,"priceIn":0.25,"priceOut":1.5,"totalCost":0.0688,"totalTime":0},{"model":"Grok 4.20","composite_score":73.59,"cov_score":61.76,"expert_score":100,"priceIn":2,"priceOut":6,"totalCost":1.0674,"totalTime":2403},{"model":"DeepSeek V4 Flash","composite_score":73.57,"cov_score":61.72,"expert_score":100,"priceIn":0.14,"priceOut":0.28,"totalCost":0.02,"totalTime":0},{"model":"Gemma 4 26B (xhigh think)","composite_score":73.49,"cov_score":61.57,"expert_score":100,"priceIn":0.06,"priceOut":0.33,"totalCost":0.0448,"totalTime":3259},{"model":"Kimi K2.6","composite_score":73.21,"cov_score":61.07,"expert_score":100,"priceIn":0.7448,"priceOut":4.655,"totalCost":0.5621,"totalTime":0},{"model":"DeepSeek V4 Pro","composite_score":73.08,"cov_score":60.83,"expert_score":100,"priceIn":0.435,"priceOut":0.87,"totalCost":0.7934,"totalTime":3829},{"model":"DeepSeek V4 Pro (no think)","composite_score":72.89,"cov_score":60.48,"expert_score":100,"priceIn":0.435,"priceOut":0.87,"totalCost":0.1486,"totalTime":0},{"model":"Qwen3.5 Flash (high think)","composite_score":72.89,"cov_score":60.49,"expert_score":100,"priceIn":0.065,"priceOut":0.26,"totalCost":0.1891,"totalTime":0},{"model":"Gemma 4 26B (high think)","composite_score":72.72,"cov_score":60.17,"expert_score":100,"priceIn":0.06,"priceOut":0.33,"totalCost":0.0387,"totalTime":0},{"model":"MiMo 2.5 Pro (no think)","composite_score":72.53,"cov_score":59.84,"expert_score":100,"priceIn":1,"priceOut":3,"totalCost":0.1197,"totalTime":0},{"model":"Gemini 3.1 Flash Lite (xhigh think)","composite_score":72.48,"cov_score":59.74,"expert_score":100,"priceIn":0.25,"priceOut":1.5,"totalCost":0.3995,"totalTime":628},{"model":"MiMo 2.5","composite_score":72.46,"cov_score":59.71,"expert_score":100,"priceIn":0.4,"priceOut":2,"totalCost":0.1198,"totalTime":0},{"model":"GLM-5 (no think)","composite_score":72.06,"cov_score":58.98,"expert_score":100,"priceIn":0.6,"priceOut":2.08,"totalCost":0.0826,"totalTime":0},{"model":"Gemma 4 26B (medium think)","composite_score":71.99,"cov_score":58.84,"expert_score":100,"priceIn":0.06,"priceOut":0.33,"totalCost":0.0368,"totalTime":0},{"model":"Gemma 4 31B","composite_score":71.69,"cov_score":58.31,"expert_score":100,"priceIn":0.13,"priceOut":0.38,"totalCost":0,"totalTime":0},{"model":"Gemma 4 26B","composite_score":71.52,"cov_score":58,"expert_score":100,"priceIn":0.06,"priceOut":0.33,"totalCost":0.0048,"totalTime":0},{"model":"Grok 4.20  (no think)","composite_score":71.46,"cov_score":57.88,"expert_score":100,"priceIn":2,"priceOut":6,"totalCost":0.2115,"totalTime":0},{"model":"Qwen3.5 Flash (no think)","composite_score":71.38,"cov_score":57.74,"expert_score":100,"priceIn":0.065,"priceOut":0.26,"totalCost":0.2118,"totalTime":0},{"model":"MiMo V2 Pro","composite_score":71.37,"cov_score":57.72,"expert_score":100,"priceIn":1,"priceOut":3,"totalCost":0.1199,"totalTime":306},{"model":"Gemma 4 31B (high think)","composite_score":71.25,"cov_score":57.49,"expert_score":100,"priceIn":0.13,"priceOut":0.38,"totalCost":0.0214,"totalTime":0},{"model":"MiMo 2.5 Pro","composite_score":70.62,"cov_score":56.34,"expert_score":100,"priceIn":1,"priceOut":3,"totalCost":0.2056,"totalTime":0},{"model":"Gemini 3 Flash","composite_score":70.5,"cov_score":56.12,"expert_score":100,"priceIn":0.5,"priceOut":3,"totalCost":0.2325,"totalTime":0},{"model":"MiMo 2.5 (no think)","composite_score":70.16,"cov_score":55.5,"expert_score":100,"priceIn":0.4,"priceOut":2,"totalCost":0.0613,"totalTime":0},{"model":"GLM-5 Turbo (no think)","composite_score":70.13,"cov_score":55.45,"expert_score":100,"priceIn":1.2,"priceOut":4,"totalCost":0.2862,"totalTime":0},{"model":"GLM-4.6","composite_score":69.96,"cov_score":55.14,"expert_score":100,"priceIn":0.39,"priceOut":1.9,"totalCost":0.2407,"totalTime":0},{"model":"GLM-4.7","composite_score":69.92,"cov_score":55.06,"expert_score":100,"priceIn":0.38,"priceOut":1.74,"totalCost":0.1682,"totalTime":0},{"model":"Grok 4.1 Fast (no think)","composite_score":69.88,"cov_score":54.99,"expert_score":100,"priceIn":0.2,"priceOut":0.5,"totalCost":0.0545,"totalTime":740},{"model":"Gemini 3.1 Flash Lite (medium think)","composite_score":69.8,"cov_score":54.84,"expert_score":100,"priceIn":0.25,"priceOut":1.5,"totalCost":0.0691,"totalTime":0},{"model":"Gemma 4 31B (medium think)","composite_score":69.64,"cov_score":54.55,"expert_score":100,"priceIn":0.13,"priceOut":0.38,"totalCost":0.0219,"totalTime":0},{"model":"Gemma 4 26B (no think)","composite_score":69.59,"cov_score":54.46,"expert_score":100,"priceIn":0.06,"priceOut":0.33,"totalCost":0.0088,"totalTime":0},{"model":"GPT-5.4","composite_score":69.4,"cov_score":54.1,"expert_score":100,"priceIn":2.5,"priceOut":15,"totalCost":0.9334,"totalTime":0},{"model":"MiMo V2 Flash","composite_score":69.35,"cov_score":54.02,"expert_score":100,"priceIn":0.09,"priceOut":0.29,"totalCost":0.0417,"totalTime":0},{"model":"DeepSeek V4 Flash (no think)","composite_score":69.33,"cov_score":53.98,"expert_score":100,"priceIn":0.14,"priceOut":0.28,"totalCost":0.012,"totalTime":0},{"model":"GLM-5","composite_score":69.19,"cov_score":53.71,"expert_score":100,"priceIn":0.6,"priceOut":2.08,"totalCost":0.0647,"totalTime":0},{"model":"MiniMax M2.7 (no think)","composite_score":68.62,"cov_score":52.67,"expert_score":100,"priceIn":0.3,"priceOut":1.2,"totalCost":0.0488,"totalTime":0},{"model":"MiniMax M2.7","composite_score":68.2,"cov_score":51.89,"expert_score":100,"priceIn":0.3,"priceOut":1.2,"totalCost":0.1468,"totalTime":0},{"model":"MiniMax M2.7 (high think)","composite_score":68.19,"cov_score":51.87,"expert_score":100,"priceIn":0.3,"priceOut":1.2,"totalCost":0.0992,"totalTime":0},{"model":"GLM-4.6 (no think)","composite_score":67.99,"cov_score":51.5,"expert_score":100,"priceIn":0.39,"priceOut":1.9,"totalCost":0.0552,"totalTime":0},{"model":"Mercury 2","composite_score":67.89,"cov_score":51.33,"expert_score":100,"priceIn":0.25,"priceOut":0.75,"totalCost":0.0404,"totalTime":0},{"model":"GPT-5.4 Mini (no think)","composite_score":67.69,"cov_score":50.96,"expert_score":100,"priceIn":0.75,"priceOut":4.5,"totalCost":0.1286,"totalTime":0},{"model":"GPT-5.4 Nano","composite_score":67.66,"cov_score":50.9,"expert_score":100,"priceIn":0.2,"priceOut":1.25,"totalCost":0.0534,"totalTime":0},{"model":"GPT-5.4 Nano (high think)","composite_score":67.66,"cov_score":50.9,"expert_score":100,"priceIn":0.2,"priceOut":1.25,"totalCost":0.0666,"totalTime":0},{"model":"GPT-5.4 (no think)","composite_score":67.56,"cov_score":50.71,"expert_score":100,"priceIn":2.5,"priceOut":15,"totalCost":0.4155,"totalTime":0},{"model":"GLM-5 Turbo","composite_score":67.31,"cov_score":50.24,"expert_score":100,"priceIn":1.2,"priceOut":4,"totalCost":0.2986,"totalTime":0},{"model":"Gemini 3.1 Flash Lite (no think)","composite_score":66.83,"cov_score":49.36,"expert_score":100,"priceIn":0.25,"priceOut":1.5,"totalCost":0.0318,"totalTime":0},{"model":"GPT-5.4 Mini (medium think)","composite_score":66.52,"cov_score":48.78,"expert_score":100,"priceIn":0.75,"priceOut":4.5,"totalCost":0.2966,"totalTime":0},{"model":"GPT-5.4 Mini","composite_score":66.38,"cov_score":48.52,"expert_score":100,"priceIn":0.75,"priceOut":4.5,"totalCost":0.3114,"totalTime":0},{"model":"GLM-4.5 (no think)","composite_score":66.09,"cov_score":47.99,"expert_score":100,"priceIn":0.6,"priceOut":2.2,"totalCost":0.3262,"totalTime":0},{"model":"Llama 4 Maverick (no think)","composite_score":66.03,"cov_score":47.88,"expert_score":100,"priceIn":0.15,"priceOut":0.6,"totalCost":0.0152,"totalTime":141},{"model":"GLM-4.5","composite_score":65.56,"cov_score":47,"expert_score":100,"priceIn":0.6,"priceOut":2.2,"totalCost":0.2982,"totalTime":0},{"model":"GPT-5.4 Mini (high think)","composite_score":65.53,"cov_score":46.94,"expert_score":100,"priceIn":0.75,"priceOut":4.5,"totalCost":0.7348,"totalTime":0},{"model":"MiMo V2 Flash (no think)","composite_score":65.47,"cov_score":46.83,"expert_score":100,"priceIn":0.09,"priceOut":0.29,"totalCost":0.0095,"totalTime":174},{"model":"Gemini 3 Flash (no think)","composite_score":65.33,"cov_score":46.57,"expert_score":100,"priceIn":0.5,"priceOut":3,"totalCost":0.0657,"totalTime":0},{"model":"Mercury 2 (no think)","composite_score":64.96,"cov_score":45.88,"expert_score":100,"priceIn":0.25,"priceOut":0.75,"totalCost":0.0434,"totalTime":70},{"model":"Step 3.5 Flash (no think)","composite_score":63.67,"cov_score":43.47,"expert_score":100,"priceIn":0.1,"priceOut":0.3,"totalCost":0.0936,"totalTime":2620},{"model":"GPT-OSS 20B (no think)","composite_score":63.26,"cov_score":42.72,"expert_score":100,"priceIn":0.03,"priceOut":0.14,"totalCost":0.0074,"totalTime":0},{"model":"Seed 2.0 Mini (no think)","composite_score":61.16,"cov_score":38.78,"expert_score":100,"priceIn":0.1,"priceOut":0.4,"totalCost":0.1005,"totalTime":6395},{"model":"Gemma 4 31B (no think)","composite_score":59.94,"cov_score":36.49,"expert_score":100,"priceIn":0.13,"priceOut":0.38,"totalCost":0.0003,"totalTime":0},{"model":"DeepSeek Chat (no think)","composite_score":59.17,"cov_score":35.03,"expert_score":100,"priceIn":0.32,"priceOut":0.89,"totalCost":0.0268,"totalTime":0},{"model":"Phi 4 (no think)","composite_score":59.17,"cov_score":35.03,"expert_score":100,"priceIn":0.065,"priceOut":0.14,"totalCost":0.0051,"totalTime":207},{"model":"GPT-OSS 20B","composite_score":58.53,"cov_score":33.83,"expert_score":100,"priceIn":0.03,"priceOut":0.14,"totalCost":0.0076,"totalTime":195},{"model":"Seed 2.0 Mini (high think)","composite_score":58.44,"cov_score":33.65,"expert_score":100,"priceIn":0.1,"priceOut":0.4,"totalCost":0.1445,"totalTime":0},{"model":"GPT-5.4 Nano (no think)","composite_score":58.29,"cov_score":33.37,"expert_score":100,"priceIn":0.2,"priceOut":1.25,"totalCost":0.0318,"totalTime":0},{"model":"Phi 4","composite_score":57.96,"cov_score":32.76,"expert_score":100,"priceIn":0.065,"priceOut":0.14,"totalCost":0.005,"totalTime":0},{"model":"DeepSeek Chat","composite_score":57.57,"cov_score":32.01,"expert_score":100,"priceIn":0.32,"priceOut":0.89,"totalCost":0.0266,"totalTime":0},{"model":"Seed 2.0 Mini","composite_score":56.75,"cov_score":30.46,"expert_score":100,"priceIn":0.1,"priceOut":0.4,"totalCost":0.0976,"totalTime":0},{"model":"Trinity Mini","composite_score":56.41,"cov_score":29.83,"expert_score":100,"priceIn":0.045,"priceOut":0.15,"totalCost":0.0098,"totalTime":294},{"model":"Trinity Mini (no think)","composite_score":56.27,"cov_score":29.55,"expert_score":100,"priceIn":0.045,"priceOut":0.15,"totalCost":0.0103,"totalTime":317},{"model":"Seed 2.0 Mini (medium think)","composite_score":56.1,"cov_score":29.23,"expert_score":100,"priceIn":0.1,"priceOut":0.4,"totalCost":0.094,"totalTime":0},{"model":"LFM 2.5 Thinking","composite_score":51.17,"cov_score":19.87,"expert_score":100,"priceIn":0,"priceOut":0,"totalCost":0,"totalTime":0},{"model":"Ling 2.6 Flash","composite_score":41.17,"cov_score":41.17,"expert_score":null,"priceIn":0,"priceOut":0,"totalCost":0,"totalTime":0},{"model":"Ling 2.6 Flash (no think)","composite_score":34.26,"cov_score":34.26,"expert_score":null,"priceIn":0,"priceOut":0,"totalCost":0,"totalTime":0}];
+
   const tbody = document.querySelector('#leaderboard tbody');
   const noResults = document.getElementById('no-results');
   const resultCount = document.getElementById('result-count');
@@ -334,38 +443,34 @@
   let activeFilter = 'all';
   let searchQuery = '';
 
-  // Build filter pills dynamically
   function updatePills() {
     const total = allData.length;
-    const zeroMisses = allData.filter(r => r.redMisses === 0 && r.greenFP === 0 && r.misses === 0).length;
-    const clean = allData.filter(r => r.redMisses === 0 && r.greenFP === 0).length;
+    const perfect = allData.filter(r => r.composite_score === 100).length;
+    const zeroRM = allData.filter(r => r.red_misses === 0).length;
     const noThink = allData.filter(r => r.model.includes('(no think)')).length;
     const thinking = total - noThink;
     const free = allData.filter(r => r.priceOut === 0).length;
     const budget = allData.filter(r => r.priceOut > 0 && r.priceOut < 0.50).length;
     const mid = allData.filter(r => r.priceOut >= 0.50 && r.priceOut < 5).length;
     const premium = allData.filter(r => r.priceOut >= 5).length;
-    const unreliable = allData.filter(r => r.unreliable === true).length;
 
     const filters = [
       ['all', `All (${total})`],
-      ['zero-misses', `Zero Misses (${zeroMisses})`],
-      ['clean', `Clean (0 RM, 0 FP) (${clean})`],
+      ['perfect', `Perfect 100 (${perfect})`],
+      ['zero-rm', `Zero Red Miss (${zeroRM})`],
       ['no-think', `No-Think (${noThink})`],
       ['thinking', `Thinking (${thinking})`],
       ['free', `Free (${free})`],
-      ['budget', `Budget (${budget})`],
-      ['mid', `Mid (${mid})`],
-      ['premium', `Premium (${premium})`],
-      ['unreliable', `⚠️ Unreliable (${unreliable})`],
+      ['budget', `Budget <\$0.50 (${budget})`],
+      ['mid', `Mid \$0.50–5 (${mid})`],
+      ['premium', `Premium \$5+ (${premium})`],
     ];
 
     const container = document.getElementById('pills');
-    const current = activeFilter;
     container.innerHTML = '';
     filters.forEach(([key, label]) => {
       const s = document.createElement('span');
-      s.className = 'pill' + (key === current ? ' active' : '');
+      s.className = 'pill' + (key === activeFilter ? ' active' : '');
       s.dataset.filter = key;
       s.textContent = label;
       s.addEventListener('click', () => {
@@ -378,16 +483,12 @@
     });
   }
 
-  // Render rows
   function render() {
     tbody.innerHTML = '';
     let count = 0;
     allData.forEach((r, i) => {
-      if (!matchesFilter(r) || !matchesSearch(r)) {
-        return;
-      }
+      if (!matchesFilter(r) || !matchesSearch(r)) return;
       count++;
-      const warn = r.unreliable ? ' ⚠️' : ''; const unrReason = r.unreliableReason ? ' — ' + r.unreliableReason : '';
       const nt = r.model.includes('(no think)') ? ' ✓' : '';
       let tierClass = '';
       if (r.priceOut === 0) tierClass = 'tier-free';
@@ -395,46 +496,29 @@
       else if (r.priceOut < 5) tierClass = 'tier-mid';
       else tierClass = 'tier-premium';
       const tierLabel = tierClass.replace('tier-', '').charAt(0).toUpperCase() + tierClass.replace('tier-', '').slice(1);
-      const missCls = (r.redMisses > 0 || r.greenFP > 0 || r.misses > 0) ? ' miss' : '';
-      const rmDisplay = r.redMisses > 0 ? '<span style="color:#f87171">' + r.redMisses + '</span>' : '0';
-      const gfpDisplay = r.greenFP > 0 ? '<span style="color:#fbbf24">' + r.greenFP + '</span>' : '0';
-      const penaltyDisplay = r.penaltyPoints > 0 ? ' <span style="color:#ef4444;font-size:0.75em">(-' + r.penaltyPoints + ')</span>' : '';
-      const time = (r.totalTime / 60).toFixed(1);
-      const cost = r.costRecalc.toFixed(4);
-      const l3avg = r.l3AvgTrust != null ? r.l3AvgTrust.toFixed(1) : '-';
-      const rawAvg = r.avgTrust != null ? r.avgTrust.toFixed(1) : '-';
+      const missCls = (r.red_misses > 0) ? ' miss' : '';
+      const rmDisplay = r.red_misses > 0 ? '<span style="color:#f87171">' + r.red_misses + '</span>' : '0';
+      const gfpDisplay = r.green_fps > 0 ? '<span style="color:#fbbf24">' + r.green_fps + '</span>' : '0';
+      const covDisplay = r.cov_score !== null ? r.cov_score : '—';
+      const expDisplay = r.expert_score !== null ? r.expert_score : '—';
+      const divDisplay = r.divergence_rate > 0 ? r.divergence_rate + '%' : '0%';
 
       const tr = document.createElement('tr');
       tr.className = missCls;
-      if (r.penaltyPoints > 0) tr.title = 'Raw score: ' + (r.rawScore || r.score) + ', penalties: −' + r.penaltyPoints + ' (RM: −' + (r.redMisses * 3) + ', GFP: −' + (r.greenFP * 2) + ', incomplete: −' + (r.incompleteMisses * 2) + ')';
-      tr.dataset.score = r.score;
-      tr.dataset.misses = r.misses;
-      tr.dataset.model = r.model.toLowerCase();
-      tr.dataset.nothink = r.model.includes('(no think)') ? '1' : '0';
-      tr.dataset.tier = tierClass;
-      tr.dataset.price = r.priceOut;
-      tr.dataset.rm = r.redMisses || 0;
-      tr.dataset.gfp = r.greenFP || 0;
-      tr.dataset.trust = r.avgTrust || 999;
-      tr.dataset.time = r.totalTime;
-      tr.dataset.cost = r.costRecalc;
       tr.innerHTML =
         '<td>' + (i+1) + '</td>' +
-        '<td class="model-name"><a href="model-detail.html?model=' + encodeURIComponent(r.model) + '">' + r.model + warn + nt + '<span class="tier-badge ' + tierClass + '">' + tierLabel + '</span></a></td>' +
-        '<td class="score">' + r.score + (r.rawScore && r.rawScore !== r.score ? ' <span style="font-size:0.7em;opacity:0.6">(' + r.rawScore + ')</span>' : '') + penaltyDisplay + '</td>' +
+        '<td class="model-name"><a href="model-detail.html?model=' + encodeURIComponent(r.model) + '">' + r.model + nt + '<span class="tier-badge ' + tierClass + '">' + tierLabel + '</span></a></td>' +
+        '<td class="score">' + r.composite_score + '</td>' +
+        '<td>' + covDisplay + '</td>' +
+        '<td>' + expDisplay + '</td>' +
+        '<td>' + divDisplay + '</td>' +
         '<td>' + rmDisplay + '</td>' +
         '<td>' + gfpDisplay + '</td>' +
-        '<td>' + (r.misses || 0) + '</td>' +
-        '<td>' + rawAvg + '</td>' +
-        '<td>' + (r.valid || '?') + '</td>' +
-        '<td>' + time + 'm</td>' +
-        '<td>$' + cost + '</td>';
+        '<td>' + r.range_penalties + '</td>';
       tbody.appendChild(tr);
     });
 
-    // Re-sort
     if (sortCol >= 0) applySortToDOM();
-
     noResults.style.display = count === 0 ? '' : 'none';
     resultCount.textContent = 'Showing ' + count;
   }
@@ -443,15 +527,14 @@
     const isNoThink = r.model.includes('(no think)');
     switch(activeFilter) {
       case 'all': return true;
-      case 'zero-misses': return r.redMisses === 0 && r.greenFP === 0 && r.misses === 0;
-      case 'clean': return r.redMisses === 0 && r.greenFP === 0;
+      case 'perfect': return r.composite_score === 100;
+      case 'zero-rm': return r.red_misses === 0;
       case 'no-think': return isNoThink;
       case 'thinking': return !isNoThink;
       case 'free': return r.priceOut === 0;
       case 'budget': return r.priceOut > 0 && r.priceOut < 0.50;
       case 'mid': return r.priceOut >= 0.50 && r.priceOut < 5;
       case 'premium': return r.priceOut >= 5;
-      case 'unreliable': return r.unreliable === true;
       default: return true;
     }
   }
@@ -461,10 +544,8 @@
     return r.model.toLowerCase().includes(searchQuery);
   }
 
-  // Pill clicks handled inside updatePills()
   updatePills();
 
-  // Search
   searchInput.addEventListener('input', () => {
     searchQuery = searchInput.value.trim().toLowerCase();
     render();
@@ -473,22 +554,22 @@
   // Sortable headers
   let sortCol = -1, sortAsc = true;
   const parsers = [
-    v => parseInt(v.textContent),           // # rank
-    v => v.textContent.trim(),             // model name
-    v => parseFloat(v.textContent),        // score
-    v => parseInt(v.textContent),          // red misses
-    v => parseInt(v.textContent),          // green FP
-    v => parseInt(v.textContent),          // total misses
-    v => parseFloat(v.textContent) || 0,   // avg trust
-    v => v.textContent,                    // valid
-    v => parseFloat(v.textContent) || 0,   // time
-    v => parseFloat(v.textContent.replace('$','')) || 0,  // cost
+    v => parseInt(v.textContent),
+    v => v.textContent.trim().replace(/ ✓/, '').replace(/Free|Budget|Mid|Premium/g, ''),
+    v => parseFloat(v.textContent) || 0,
+    v => v.textContent === '—' ? -1 : parseFloat(v.textContent),
+    v => v.textContent === '—' ? -1 : parseFloat(v.textContent),
+    v => parseFloat(v.textContent) || 0,
+    v => parseInt(v.textContent) || 0,
+    v => parseInt(v.textContent) || 0,
+    v => parseInt(v.textContent) || 0,
   ];
   function applySortToDOM() {
     const rows = Array.from(tbody.querySelectorAll('tr'));
     rows.sort((a, b) => {
       const va = parsers[sortCol](a.children[sortCol]);
       const vb = parsers[sortCol](b.children[sortCol]);
+      if (typeof va === 'string') return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
       return sortAsc ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
     });
     rows.forEach(r => tbody.appendChild(r));
@@ -504,8 +585,6 @@
   });
 
   render();
-  // Also update meta card model count
-  document.querySelector('.meta-card .number') && (document.querySelector('.meta-card .number').textContent = allData.length);
 })();
 </script>
 

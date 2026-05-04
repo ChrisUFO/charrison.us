@@ -372,6 +372,7 @@
           <th data-col="6">Red Misses <span class="sort-arrow">▲</span></th>
           <th data-col="7">Green FP <span class="sort-arrow">▲</span></th>
           <th data-col="8">Range Pen <span class="sort-arrow">▲</span></th>
+          <th data-col="9">Cost <span class="sort-arrow">▲</span></th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -511,7 +512,8 @@
         '<td>' + divDisplay + '</td>' +
         '<td>' + rmDisplay + '</td>' +
         '<td>' + gfpDisplay + '</td>' +
-        '<td>' + r.range_penalties + '</td>';
+        '<td>' + r.range_penalties + '</td>' +
+        '<td>$' + (r.totalCost ? r.totalCost.toFixed(2) : '0.00') + '</td>';
       tbody.appendChild(tr);
     });
 
